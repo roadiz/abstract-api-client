@@ -5,9 +5,9 @@
   "repository": "git@github.com:roadiz/abstract-api-client.git",
   "author": "Ambroise Maupate <ambroise@rezo-zero.com>",
   "license": "MIT",
-  "types": "src/index.d.ts",
+  "types": "index.d.ts",
   "files": [
-    "src/types/*.d.ts"
+    "./types/*.d.ts"
   ],
   "publishConfig": {
     "access": "public"
