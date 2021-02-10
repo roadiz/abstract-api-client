@@ -3,7 +3,7 @@
  *
  * @see https://github.com/roadiz/AbstractApiTheme/blob/develop/README.md#listing-nodes-sources
  */
-interface RoadizApiNSParams {
+export interface RoadizApiNSParams {
     itemsPerPage?: number
     page?: number
     _locale?: string
@@ -29,7 +29,7 @@ interface RoadizApiNSParams {
     'node.bNodes.field.name'?: string
 }
 
-interface RoadizApiPublishedParams {
+export interface RoadizApiPublishedParams {
     after?: string
     before?: string
     strictly_after?: string

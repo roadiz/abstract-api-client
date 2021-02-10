@@ -4,11 +4,11 @@
  * @see https://docs.roadiz.io/en/latest/developer/nodes-system/intro.html#what-is-a-node-type
  */
 
-interface RoadizNodeType {
+export interface RoadizNodeType {
     name: string
 }
 
-interface RoadizNode {
+export interface RoadizNode {
     nodeName: string
     home: boolean
     visible: boolean
@@ -18,11 +18,11 @@ interface RoadizNode {
     attributeValues: Array<RoadizAttributeValue>
 }
 
-interface RoadizTranslation {
+export interface RoadizTranslation {
     locale: string
 }
 
-interface RoadizNodesSources {
+export interface RoadizNodesSources {
     node: RoadizNode
     translation?: RoadizTranslation
     slug: string
@@ -37,17 +37,17 @@ interface RoadizNodesSources {
     '@id'?: string
 }
 
-interface RoadizTag {}
+export interface RoadizTag {}
 
-interface RoadizAttributeValue {}
+export interface RoadizAttributeValue {}
 
-interface RoadizWalker {
+export interface RoadizWalker {
     '@type': string
     item: RoadizNodesSources
     children: Array<RoadizWalker>
 }
 
-interface RoadizDocument {
+export interface RoadizDocument {
     processable: boolean
     relativePath?: string
     alt?: string
@@ -65,7 +65,7 @@ interface RoadizDocument {
     documentTranslations?: Array<RoadizDocumentTranslation>
 }
 
-interface RoadizDocumentTranslation {
+export interface RoadizDocumentTranslation {
     name?: string
     description?: string
     copyright?: string
