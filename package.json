@@ -1,6 +1,6 @@
 {
   "name": "@roadiz/abstract-api-client",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Roadiz abstract API Typescript client interfaces and SDK",
   "repository": {
     "url": "https://github.com/roadiz/abstract-api-client",
@@ -8,7 +8,7 @@
   },
   "author": "Ambroise Maupate <ambroise@rezo-zero.com>",
   "license": "MIT",
-  "types": "index",
+  "types": "./index.d.ts",
   "files": [
     "**/*.d.ts"
   ],
