@@ -19,27 +19,59 @@ export interface RoadizNode {
 }
 
 export interface RoadizTranslation {
-    locale: string
+    locale: string // ISO 2-letter language code (fr, en, de).
 }
 
 export interface RoadizNodesSources {
     node: RoadizNode
     translation?: RoadizTranslation
-    slug: string
+    slug: string // First urlAlias OR node.nodeName
     title: string
-    publishedAt: string
-    url?: string
+    publishedAt: string // ISO publication DateTime
+    url?: string // Reachable nodes-sources URL
+    refererUrl?: string // Non-reachable nodes-sources parent URL
     metaTitle?: string
     metaKeywords?: string
     metaDescription?: string
     blocks?: Array<RoadizWalker>
+    urlAliases?: Array<RoadizUrlAlias>
     '@type': string
     '@id'?: string
 }
 
-export interface RoadizTag {}
+export interface RoadizUrlAlias {
+    alias?: string
+}
 
-export interface RoadizAttributeValue {}
+export interface RoadizTag {
+    name?: string
+    color?: string
+    tagName?: string
+    visible?: boolean
+    '@type'?: string
+    documents: Array<RoadizDocument>
+}
+
+export interface RoadizAttributeValue {
+    attribute: RoadizAttribute
+    attributeValueTranslations: Array<RoadizAttributeValueTranslation>
+}
+
+export interface RoadizAttributeValueTranslation {
+    value?: string
+    translation: RoadizTranslation
+}
+
+export interface RoadizAttribute {
+    documents: Array<RoadizDocument>
+    code?: string
+    attributeTranslations: Array<RoadizAttributeTranslation>
+}
+
+export interface RoadizAttributeTranslation {
+    label?: string
+    translation: RoadizTranslation
+}
 
 export interface RoadizWalker {
     '@type': string
@@ -48,21 +80,21 @@ export interface RoadizWalker {
 }
 
 export interface RoadizDocument {
-    processable: boolean
+    processable: boolean // True if document can be processed by an image optimizer
     relativePath?: string
     alt?: string
-    platform?: string
-    embedId?: string
-    embedPlatform?: string
+    embedId?: string // Only for external documents (Youtube, Vimeo, …)
+    embedPlatform?: string // Only for external documents (Youtube, Vimeo, …)
     mimeType?: string
-    image?: string
-    imageWidth?: string
-    imageHeight?: string
-    imageAverageColor?: string
-    fileSize?: string
-    url?: string
-    thumbnail?: RoadizDocument
+    imageWidth?: string // Only for processable documents, i.e. images
+    imageHeight?: string // Only for processable documents, i.e. images
+    imageAverageColor?: string // Only for processable documents, i.e. images
+    filename?: string
+    filesize?: string
+    thumbnail?: RoadizDocument // Only for none displayable documents, i.e. PDFs
     documentTranslations?: Array<RoadizDocumentTranslation>
+    '@type': string
+    url?: string
 }
 
 export interface RoadizDocumentTranslation {
