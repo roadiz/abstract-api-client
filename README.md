@@ -8,14 +8,12 @@ yarn add --dev @roadiz/abstract-api-client
 ```
 
 ```json
+// tsconfig.json
 {
   "compilerOptions": {
     "types": [
-      "@nuxt/types",
-      "@types/node",
       "@roadiz/abstract-api-client"
     ]
   }
 }
-
 ```
