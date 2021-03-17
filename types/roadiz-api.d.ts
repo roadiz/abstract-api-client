@@ -6,6 +6,7 @@
 export interface RoadizApiNSParams {
     itemsPerPage?: number
     page?: number
+    _preview?: boolean
     _locale?: string
     search?: string
     order?: {
