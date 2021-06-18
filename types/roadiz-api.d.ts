@@ -20,6 +20,7 @@ export interface RoadizApiNSParams {
     publishedAt?: RoadizApiPublishedParams
     tags?: Array<string>
     tagExclusive?: boolean
+    not?: int | string | Array<int | string>
     'node.parent'?: string | number
     'node.visible'?: boolean
     'node.home'?: boolean
