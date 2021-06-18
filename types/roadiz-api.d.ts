@@ -14,6 +14,7 @@ export interface RoadizApiNSParams {
     }
     archive?: string
     path?: string
+    properties?: string[]
     id?: number
     title?: number
     publishedAt?: RoadizApiPublishedParams
