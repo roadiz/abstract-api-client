@@ -76,6 +76,33 @@ return api.fetchAllUrlsForLocale('fr').then((urls: Array<string>) => {
 })
 ```
 
+### Get all alternative URLs for a node-source
+
+Alternative links are useful to build language navigation for each website page. It's based
+on HTTP response header `Link`.
+API `getAlternateLinks` method will return a `Array<AlternateLink>` from an `AxiosResponse`:
+
+```ts
+const api = new HeadlessRoadizApi(
+    process.env.API_BASE_URL, 
+    process.env.API_NON_PREVIEW_API_KEY, 
+    false
+)
+
+api.getSingleNodesSourcesByPath('/').then((response) => {
+    /*
+     * [{
+     *     url: '/',
+     *     locale: 'en'
+     * }, {
+     *     url: '/fr',
+     *     locale: 'fr'
+     * }]
+     */
+    api.getAlternateLinks(response)
+})
+```
+
 ## Test
 
 Tests use *jest* and require a working Roadiz headless API to fetch responses from. Copy `.env.dist` to `.env` 

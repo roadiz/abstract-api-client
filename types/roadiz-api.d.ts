@@ -3,6 +3,11 @@
  *
  * @see https://github.com/roadiz/AbstractApiTheme/blob/develop/README.md#listing-nodes-sources
  */
+interface AlternateLink {
+    url: string
+    locale: string
+}
+
 export interface RoadizApiBaseParams {
     itemsPerPage?: number
     page?: number

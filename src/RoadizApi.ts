@@ -1,4 +1,4 @@
-import {RoadizApiNSParams, RoadizApiSearchParams, RoadizApiTagsParams} from '../types/roadiz-api'
+import {AlternateLink, RoadizApiNSParams, RoadizApiSearchParams, RoadizApiTagsParams} from '../types/roadiz-api'
 import {ArchivesHydraCollection, HydraCollection} from '../types/hydra'
 import {RoadizNodesSources, RoadizSearchResultItem, RoadizTag} from '../types/roadiz'
 import axios, {AxiosInstance, AxiosResponse} from 'axios'
@@ -135,5 +135,26 @@ export default class RoadizApi {
         } while (active)
 
         return refs
+    }
+
+    getAlternateLinks(response: AxiosResponse): Array<AlternateLink> {
+        if (!response.headers.link) return []
+
+        return response.headers.link
+            .split(',')
+            .filter((link) => {
+                return link
+                    .split(';')
+                    .map((attribute) => attribute.trim())
+                    .includes('type="text/html"')
+            })
+            .map((link) => {
+                const attributes = link.split(';')
+
+                return {
+                    url: attributes[0].split('<').join('').split('>').join('').trim(),
+                    locale: attributes[2].split('hreflang="').join('').split('"').join('').trim(),
+                } as AlternateLink
+            })
     }
 }

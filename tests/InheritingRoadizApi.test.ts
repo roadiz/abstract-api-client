@@ -1,5 +1,5 @@
 import RoadizApi from '../src/RoadizApi'
-import {RoadizApiNSParams, RoadizApiTagsParams} from '../types/roadiz-api'
+import {AlternateLink, RoadizApiNSParams, RoadizApiTagsParams} from '../types/roadiz-api'
 import {NSNeutral, NSPage} from "./types/roadiz-app-20210623-220029"
 import {RoadizDocument} from "../types/roadiz";
 
@@ -47,6 +47,20 @@ test('Headless API: By path', () => {
         expect(response.data).toBeDefined()
         expect(response.data['@type']).toBe('Page')
         expect(response.data.url).toBe('/')
+    })
+})
+
+test('Headless API: Home alternate links', () => {
+    const api = new HeadlessRoadizApi(process.env.API_BASE_URL, process.env.API_NON_PREVIEW_API_KEY, false)
+
+    return api.getSingleNodesSourcesByPath('/').then((response) => {
+        expect(api.getAlternateLinks(response)).toStrictEqual([{
+            url: '/',
+            locale: 'en'
+        }, {
+            url: '/fr',
+            locale: 'fr'
+        }])
     })
 })
 
