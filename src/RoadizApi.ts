@@ -1,14 +1,30 @@
 import {RoadizApiNSParams, RoadizApiSearchParams, RoadizApiTagsParams} from '../types/roadiz-api'
 import {ArchivesHydraCollection, HydraCollection} from '../types/hydra'
 import {RoadizNodesSources, RoadizSearchResultItem, RoadizTag} from '../types/roadiz'
-import {AxiosInstance, AxiosResponse} from 'axios'
+import axios, {AxiosInstance, AxiosResponse} from 'axios'
 import {CommonContentResponse} from '../types/common'
 
 export default class RoadizApi {
     protected axios: AxiosInstance
+    protected apiKey: string
+    protected preview: boolean
 
-    constructor(axios: AxiosInstance) {
-        this.axios = axios;
+    constructor(baseURL: string, apiKey: string, preview: boolean = false, debug: boolean = false) {
+        this.axios = axios.create();
+        this.axios.defaults.withCredentials = false
+        this.axios.defaults.headers['X-Api-Key'] = apiKey
+        this.axios.defaults.baseURL = baseURL
+        this.apiKey = apiKey;
+        this.preview = preview;
+
+        this.axios.interceptors.request.use((config) => {
+            config.params = config.params || {}
+
+            if (this.preview) {
+                config.params['_preview'] = this.preview
+            }
+            return config
+        })
     }
 
     getCommonContent(params: RoadizApiNSParams): Promise<AxiosResponse<CommonContentResponse>> {

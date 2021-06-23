@@ -41,8 +41,11 @@ export interface RoadizNodesSources {
 }
 
 export interface RoadizSearchHighlighting {
+    // eslint-disable-next-line camelcase
     collection_txt?: string[]
+    // eslint-disable-next-line camelcase
     collection_txt_fr?: string[]
+    // eslint-disable-next-line camelcase
     collection_txt_en?: string[]
 }
 
