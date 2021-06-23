@@ -34,9 +34,27 @@ export interface RoadizNodesSources {
     metaKeywords?: string
     metaDescription?: string
     blocks?: Array<RoadizWalker>
+    head?: RoadizHead
     urlAliases?: Array<RoadizUrlAlias>
     '@type': string
     '@id'?: string
+}
+
+export interface RoadizHead {
+    facebookUrl?: string
+    twitterUrl?: string
+    linkedinUrl?: string
+    instagramUrl?: string
+    youtubeUrl?: string
+    shareImage?: RoadizDocument
+    googleAnalytics?: string
+    googleTagManager?: string
+    matomoUrl?: string
+    matomoSiteId?: string
+    policyUrl?: string
+    siteName?: string
+    mainColor?: string
+    homePageUrl?: string
 }
 
 export interface RoadizUrlAlias {
