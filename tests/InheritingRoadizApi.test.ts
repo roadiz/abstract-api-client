@@ -55,7 +55,7 @@ test('Headless API: Sitemap FR', () => {
 
     return api.fetchAllUrlsForLocale('fr').then((urls) => {
         urls.forEach((url: string) => {
-            expect(url).toContain('/fr')
+            expect(url).toContain('/')
         })
     })
 })
