@@ -1,8 +1,8 @@
 import {RoadizApiNSParams, RoadizApiSearchParams, RoadizApiTagsParams} from '../types/roadiz-api'
-import { HydraCollection } from '../types/hydra'
+import {ArchivesHydraCollection, HydraCollection} from '../types/hydra'
 import {RoadizNodesSources, RoadizSearchResultItem, RoadizTag} from '../types/roadiz'
-import { AxiosInstance, AxiosResponse } from 'axios'
-import { CommonContentResponse } from "../types/common";
+import {AxiosInstance, AxiosResponse} from 'axios'
+import {CommonContentResponse} from '../types/common'
 
 export default class RoadizApi {
     protected axios: AxiosInstance
@@ -12,7 +12,7 @@ export default class RoadizApi {
     }
 
     getCommonContent(params: RoadizApiNSParams): Promise<AxiosResponse<CommonContentResponse>> {
-        return this.axios.get<CommonContentResponse>('/common', { params })
+        return this.axios.get<CommonContentResponse>('/common', {params})
     }
 
     getNodesSources(params: RoadizApiNSParams): Promise<AxiosResponse<HydraCollection<RoadizNodesSources>>> {
@@ -40,6 +40,30 @@ export default class RoadizApi {
 
     getTagsForType(type: string, params: RoadizApiTagsParams): Promise<AxiosResponse<HydraCollection<RoadizTag>>> {
         return this.axios.get<HydraCollection<RoadizTag>>(`/${type}/tags`, {
+            params,
+        })
+    }
+
+    /*
+     * {
+     *     "hydra:member": {
+     *         "2021": {
+     *             "2021-06": "2021-06-01T00:00:00+02:00",
+     *             "2021-05": "2021-05-01T00:00:00+02:00",
+     *             "2021-04": "2021-04-01T00:00:00+02:00"
+     *         }
+     *     },
+     *     "hydra:totalItems": 1,
+     *     "@id": "/api/1.0/post/archives",
+     *     "@type": "hydra:Collection",
+     *     "hydra:view": {
+     *         "@id": "/api/1.0/post/archives?_locale=fr",
+     *         "@type": "hydra:PartialCollectionView"
+     *     }
+     * }
+     */
+    getArchivesForType(type: string, params: RoadizApiNSParams): Promise<AxiosResponse<ArchivesHydraCollection>> {
+        return this.axios.get<ArchivesHydraCollection>(`/${type}/archives`, {
             params,
         })
     }

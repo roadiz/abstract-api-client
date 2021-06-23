@@ -51,6 +51,14 @@ export interface RoadizSearchResultItem {
     highlighting?: RoadizSearchHighlighting
 }
 
+export interface RoadizArchivesYear {
+    [key: string]: string
+}
+
+export interface RoadizArchivesList {
+    [key: string]: RoadizArchivesYear
+}
+
 export interface RoadizHead {
     facebookUrl?: string
     twitterUrl?: string
