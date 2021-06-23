@@ -40,6 +40,17 @@ export interface RoadizNodesSources {
     '@id'?: string
 }
 
+export interface RoadizSearchHighlighting {
+    collection_txt?: string[]
+    collection_txt_fr?: string[]
+    collection_txt_en?: string[]
+}
+
+export interface RoadizSearchResultItem {
+    nodeSource?: RoadizNodesSources
+    highlighting?: RoadizSearchHighlighting
+}
+
 export interface RoadizHead {
     facebookUrl?: string
     twitterUrl?: string

@@ -1,4 +1,4 @@
-import { RoadizHead, RoadizWalker } from "./roadiz";
+import { RoadizHead, RoadizWalker } from './roadiz'
 
 export interface CommonContentResponse {
     head: RoadizHead
