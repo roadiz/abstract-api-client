@@ -65,7 +65,7 @@ export default class MyAwesomeRoadizApi extends RoadizApi {
 ### Fetch all URLs for a sitemap
 
 ```ts
-const api = new HeadlessRoadizApi(
+const api = new MyAwesomeRoadizApi(
     process.env.API_BASE_URL, 
     process.env.API_NON_PREVIEW_API_KEY, 
     false
@@ -83,7 +83,7 @@ on HTTP response header `Link`.
 API `getAlternateLinks` method will return a `Array<AlternateLink>` from an `AxiosResponse`:
 
 ```ts
-const api = new HeadlessRoadizApi(
+const api = new MyAwesomeRoadizApi(
     process.env.API_BASE_URL, 
     process.env.API_NON_PREVIEW_API_KEY, 
     false
