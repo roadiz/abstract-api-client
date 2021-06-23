@@ -1,20 +1,20 @@
 import RoadizApi from '../src/RoadizApi'
-import {RoadizApiNSParams} from '../types/roadiz-api'
-import {AxiosResponse} from "axios"
-import {HydraCollection} from '../types/hydra'
+import {RoadizApiNSParams, RoadizApiTagsParams} from '../types/roadiz-api'
 import {NSNeutral, NSPage} from "./types/roadiz-app-20210623-220029"
 import {RoadizDocument} from "../types/roadiz";
 
 class HeadlessRoadizApi extends RoadizApi {
-    getPages(params: RoadizApiNSParams): Promise<AxiosResponse<HydraCollection<NSPage>>> {
-        return this.axios.get<HydraCollection<NSPage>>(`/page`, {
-            params,
-        })
+    getPages(params: RoadizApiNSParams) {
+        return this.getNodesSourcesForType<NSPage>('page', params)
     }
-    getNeutrals(params: RoadizApiNSParams): Promise<AxiosResponse<HydraCollection<NSNeutral>>> {
-        return this.axios.get<HydraCollection<NSNeutral>>(`/neutral`, {
-            params,
-        })
+    getPagesTags(params: RoadizApiTagsParams) {
+        return this.getTagsForType('page', params)
+    }
+    getNeutrals(params: RoadizApiNSParams) {
+        return this.getNodesSourcesForType<NSNeutral>('neutral', params)
+    }
+    getNeutralsTags(params: RoadizApiTagsParams) {
+        return this.getTagsForType('neutral', params)
     }
 }
 
@@ -47,6 +47,26 @@ test('Headless API: By path', () => {
         expect(response.data).toBeDefined()
         expect(response.data['@type']).toBe('Page')
         expect(response.data.url).toBe('/')
+    })
+})
+
+test('Headless API: Sitemap FR', () => {
+    const api = new HeadlessRoadizApi(process.env.API_BASE_URL, process.env.API_NON_PREVIEW_API_KEY, false)
+
+    return api.fetchAllUrlsForLocale('fr').then((urls) => {
+        urls.forEach((url: string) => {
+            expect(url).toContain('/fr')
+        })
+    })
+})
+
+test('Headless API: Sitemap EN', () => {
+    const api = new HeadlessRoadizApi(process.env.API_BASE_URL, process.env.API_NON_PREVIEW_API_KEY, false)
+
+    return api.fetchAllUrlsForLocale('en').then((urls) => {
+        urls.forEach((url: string) => {
+            expect(url).toContain('/')
+        })
     })
 })
 

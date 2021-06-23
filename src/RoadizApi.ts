@@ -10,7 +10,7 @@ export default class RoadizApi {
     protected apiKey: string
     protected preview: boolean
 
-    constructor(baseURL: string, apiKey: string, preview: boolean = false, debug: boolean = false) {
+    public constructor(baseURL: string, apiKey: string, preview: boolean = false, debug: boolean = false) {
         this.axios = axios.create();
         this.axios.defaults.withCredentials = false
         this.axios.defaults.headers.common = {
@@ -41,17 +41,27 @@ export default class RoadizApi {
         }
     }
 
-    getCommonContent(params: RoadizApiNSParams): Promise<AxiosResponse<CommonContentResponse>> {
-        return this.axios.get<CommonContentResponse>('/common', {params})
+    public getCommonContent<T = CommonContentResponse>(params: RoadizApiNSParams): Promise<AxiosResponse<T>> {
+        return this.axios.get<T>('/common', {params})
     }
 
-    getNodesSources(params: RoadizApiNSParams): Promise<AxiosResponse<HydraCollection<RoadizNodesSources>>> {
+    public getNodesSources(params: RoadizApiNSParams): Promise<AxiosResponse<HydraCollection<RoadizNodesSources>>> {
         return this.axios.get<HydraCollection<RoadizNodesSources>>(`/nodes-sources`, {
             params,
         })
     }
 
-    getSingleNodesSourcesByPath(path: string = ''): Promise<AxiosResponse<RoadizNodesSources>> {
+    /*
+     * You should implement get`NodeType` method that use getNodesSourcesForType internally
+     * and override return type.
+     */
+    public getNodesSourcesForType<T = RoadizNodesSources>(type: string, params: RoadizApiNSParams): Promise<AxiosResponse<HydraCollection<T>>> {
+        return this.axios.get<HydraCollection<T>>(`/${type}`, {
+            params,
+        })
+    }
+
+    public getSingleNodesSourcesByPath(path: string = ''): Promise<AxiosResponse<RoadizNodesSources>> {
         const cleanPath = path.startsWith('/') ? path : ('/' + path)
         return this.axios.get<RoadizNodesSources>('/nodes-sources/by-path', {
             params: {
@@ -63,13 +73,13 @@ export default class RoadizApi {
     /*
      * Returns RoadizSearchResultItem if search param is longer than 4 chars. Else return directly a RoadizNodesSources
      */
-    searchNodesSourcesByPath(params: RoadizApiSearchParams): Promise<AxiosResponse<HydraCollection<RoadizSearchResultItem | RoadizNodesSources>>> {
+    public searchNodesSourcesByPath(params: RoadizApiSearchParams): Promise<AxiosResponse<HydraCollection<RoadizSearchResultItem | RoadizNodesSources>>> {
         return this.axios.get<HydraCollection<RoadizSearchResultItem | RoadizNodesSources>>('/nodes-sources/search', {
             params,
         })
     }
 
-    getTagsForType(type: string, params: RoadizApiTagsParams): Promise<AxiosResponse<HydraCollection<RoadizTag>>> {
+    public getTagsForType(type: string, params: RoadizApiTagsParams): Promise<AxiosResponse<HydraCollection<RoadizTag>>> {
         return this.axios.get<HydraCollection<RoadizTag>>(`/${type}/tags`, {
             params,
         })
@@ -93,9 +103,37 @@ export default class RoadizApi {
      *     }
      * }
      */
-    getArchivesForType(type: string, params: RoadizApiNSParams): Promise<AxiosResponse<ArchivesHydraCollection>> {
+    public getArchivesForType(type: string, params: RoadizApiNSParams): Promise<AxiosResponse<ArchivesHydraCollection>> {
         return this.axios.get<ArchivesHydraCollection>(`/${type}/archives`, {
             params,
         })
+    }
+
+    public async fetchAllUrlsForLocale(_locale: string = 'fr'): Promise<Array<string>> {
+        let page = 1
+        let active = true
+        const refs = [] as Array<string>
+
+        do {
+            await this.getNodesSources({
+                'node.nodeType.reachable': true,
+                properties: ['url'],
+                page,
+                _locale,
+            })
+            .then(({ data }): void => {
+                if (data && data['hydra:member'] && data['hydra:totalItems']) {
+                    data['hydra:member'].forEach((entry): void => {
+                        if (entry.url) {
+                            refs.push(entry.url)
+                        }
+                    })
+                    active = !!(data['hydra:view'] && data['hydra:view']['hydra:next'])
+                    ++page
+                }
+            })
+        } while (active)
+
+        return refs
     }
 }
