@@ -2,6 +2,7 @@ import {RoadizApiNSParams, RoadizApiSearchParams, RoadizApiTagsParams} from '../
 import {ArchivesHydraCollection, HydraCollection} from '../types/hydra'
 import {RoadizNodesSources, RoadizSearchResultItem, RoadizTag} from '../types/roadiz'
 import axios, {AxiosInstance, AxiosResponse} from 'axios'
+import qs from 'qs'
 import {CommonContentResponse} from '../types/common'
 
 export default class RoadizApi {
@@ -12,8 +13,14 @@ export default class RoadizApi {
     constructor(baseURL: string, apiKey: string, preview: boolean = false, debug: boolean = false) {
         this.axios = axios.create();
         this.axios.defaults.withCredentials = false
-        this.axios.defaults.headers['X-Api-Key'] = apiKey
+        this.axios.defaults.headers.common = {
+            'X-Api-Key': apiKey,
+            'Accept': 'application/json',
+        }
         this.axios.defaults.baseURL = baseURL
+        this.axios.defaults.paramsSerializer = (params) => {
+            return qs.stringify(params)
+        }
         this.apiKey = apiKey;
         this.preview = preview;
 
@@ -25,6 +32,13 @@ export default class RoadizApi {
             }
             return config
         })
+
+        if (debug) {
+            this.axios.interceptors.request.use(request => {
+                console.log('Axios Request', JSON.stringify(request, null, 2))
+                return request
+            })
+        }
     }
 
     getCommonContent(params: RoadizApiNSParams): Promise<AxiosResponse<CommonContentResponse>> {
@@ -37,10 +51,11 @@ export default class RoadizApi {
         })
     }
 
-    getNodesSourcesByPath(path: string): Promise<AxiosResponse<RoadizNodesSources>> {
+    getSingleNodesSourcesByPath(path: string = ''): Promise<AxiosResponse<RoadizNodesSources>> {
+        const cleanPath = path.startsWith('/') ? path : ('/' + path)
         return this.axios.get<RoadizNodesSources>('/nodes-sources/by-path', {
             params: {
-                path: '/' + path || '',
+                path: cleanPath
             },
         })
     }
