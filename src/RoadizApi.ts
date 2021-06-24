@@ -9,6 +9,7 @@ export default class RoadizApi {
     protected axios: AxiosInstance
     protected apiKey: string
     protected preview: boolean
+    protected debug: boolean
 
     public constructor(baseURL: string, apiKey: string, preview: boolean = false, debug: boolean = false) {
         this.axios = axios.create();
@@ -18,11 +19,15 @@ export default class RoadizApi {
             'Accept': 'application/json',
         }
         this.axios.defaults.baseURL = baseURL
+        /*
+         * Use qs to allow array query params
+         */
         this.axios.defaults.paramsSerializer = (params) => {
             return qs.stringify(params)
         }
         this.apiKey = apiKey;
         this.preview = preview;
+        this.debug = debug;
 
         this.axios.interceptors.request.use((config) => {
             config.params = config.params || {}
@@ -30,15 +35,11 @@ export default class RoadizApi {
             if (this.preview) {
                 config.params['_preview'] = this.preview
             }
+            if (this.debug) {
+                console.log('Axios Request', JSON.stringify(config, null, 2))
+            }
             return config
         })
-
-        if (debug) {
-            this.axios.interceptors.request.use(request => {
-                console.log('Axios Request', JSON.stringify(request, null, 2))
-                return request
-            })
-        }
     }
 
     public getCommonContent<T = CommonContentResponse>(params: RoadizApiNSParams): Promise<AxiosResponse<T>> {
