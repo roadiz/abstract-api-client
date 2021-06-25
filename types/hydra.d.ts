@@ -1,3 +1,5 @@
+import {RoadizArchivesList} from './roadiz'
+
 /**
  * Hydra JSON-LD collection interface
  *
@@ -6,6 +8,12 @@
 
 export interface HydraCollection<T> {
     'hydra:member': Array<T>
+    'hydra:totalItems': number
+    'hydra:view': HydraView
+}
+
+export interface ArchivesHydraCollection {
+    'hydra:member': RoadizArchivesList
     'hydra:totalItems': number
     'hydra:view': HydraView
 }

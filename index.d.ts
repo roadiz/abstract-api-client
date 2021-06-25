@@ -4,3 +4,4 @@
 export * from './types/hydra'
 export * from './types/roadiz'
 export * from './types/roadiz-api'
+export * from './types/common'
