@@ -19,7 +19,7 @@ class HeadlessRoadizApi extends RoadizApi {
 }
 
 test('Headless API: NSPage', () => {
-    const api = new HeadlessRoadizApi(process.env.API_BASE_URL, process.env.API_NON_PREVIEW_API_KEY, false)
+    const api = new HeadlessRoadizApi(process.env.API_BASE_URL || '', process.env.API_NON_PREVIEW_API_KEY || '', false)
 
     return api.getPages({
         order: {
@@ -40,7 +40,7 @@ test('Headless API: NSPage', () => {
 })
 
 test('Headless API: By path', () => {
-    const api = new HeadlessRoadizApi(process.env.API_BASE_URL, process.env.API_NON_PREVIEW_API_KEY, false)
+    const api = new HeadlessRoadizApi(process.env.API_BASE_URL || '', process.env.API_NON_PREVIEW_API_KEY || '', false)
 
     return api.getSingleNodesSourcesByPath('/').then((response) => {
         expect(response.status).toBe(200)
@@ -51,7 +51,7 @@ test('Headless API: By path', () => {
 })
 
 test('Headless API: Home alternate links', () => {
-    const api = new HeadlessRoadizApi(process.env.API_BASE_URL, process.env.API_NON_PREVIEW_API_KEY, false)
+    const api = new HeadlessRoadizApi(process.env.API_BASE_URL || '', process.env.API_NON_PREVIEW_API_KEY || '', false)
 
     return api.getSingleNodesSourcesByPath('/').then((response) => {
         expect(api.getAlternateLinks(response)).toStrictEqual([{
@@ -65,7 +65,7 @@ test('Headless API: Home alternate links', () => {
 })
 
 test('Headless API: Sitemap FR', () => {
-    const api = new HeadlessRoadizApi(process.env.API_BASE_URL, process.env.API_NON_PREVIEW_API_KEY, false)
+    const api = new HeadlessRoadizApi(process.env.API_BASE_URL || '', process.env.API_NON_PREVIEW_API_KEY || '', false)
 
     return api.fetchAllUrlsForLocale('fr').then((urls) => {
         urls.forEach((url: string) => {
@@ -75,7 +75,7 @@ test('Headless API: Sitemap FR', () => {
 })
 
 test('Headless API: Sitemap EN', () => {
-    const api = new HeadlessRoadizApi(process.env.API_BASE_URL, process.env.API_NON_PREVIEW_API_KEY, false)
+    const api = new HeadlessRoadizApi(process.env.API_BASE_URL || '', process.env.API_NON_PREVIEW_API_KEY || '', false)
 
     return api.fetchAllUrlsForLocale('en').then((urls) => {
         urls.forEach((url: string) => {
@@ -85,7 +85,7 @@ test('Headless API: Sitemap EN', () => {
 })
 
 test('Headless API: NSNeutral', () => {
-    const api = new HeadlessRoadizApi(process.env.API_BASE_URL, process.env.API_NON_PREVIEW_API_KEY, false)
+    const api = new HeadlessRoadizApi(process.env.API_BASE_URL || '', process.env.API_NON_PREVIEW_API_KEY || '', false)
 
     return api.getNeutrals({
         page: 1

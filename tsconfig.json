@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "baseUrl": ".",
+        "module": "amd",
+        "moduleResolution": "Node",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "outFile":"dist/index.js"
+    },
+    "files": [
+        "src/RoadizApi.ts"
+    ],
+    "include": ["src/**/*", "tests/**/*"]
+}

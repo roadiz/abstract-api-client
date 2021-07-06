@@ -143,13 +143,13 @@ export default class RoadizApi {
 
         return response.headers.link
             .split(',')
-            .filter((link) => {
+            .filter((link: string) => {
                 return link
                     .split(';')
                     .map((attribute) => attribute.trim())
                     .includes('type="text/html"')
             })
-            .map((link) => {
+            .map((link: string) => {
                 const attributes = link.split(';')
 
                 return {

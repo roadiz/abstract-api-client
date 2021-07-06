@@ -12,17 +12,17 @@ test('Non-configured API is not found', () => {
 })
 
 test('Bad api key API', () => {
-    const api = new RoadizApi(process.env.API_BASE_URL, 'xxxxxx', false)
+    const api = new RoadizApi(process.env.API_BASE_URL || '', 'xxxxxx', false)
 
     return api.getNodesSources({
         page: 1
     }).catch((response: AxiosError) => {
-        expect(response.response.status).toBe(403)
+        expect(response.response?.status).toBe(403)
     })
 })
 
 test('Configured API', () => {
-    const api = new RoadizApi(process.env.API_BASE_URL, process.env.API_NON_PREVIEW_API_KEY, false)
+    const api = new RoadizApi(process.env.API_BASE_URL || '', process.env.API_NON_PREVIEW_API_KEY || '', false)
 
     return api.getNodesSources({
         page: 1
@@ -32,7 +32,7 @@ test('Configured API', () => {
 })
 
 test('Test NodesSources HydraCollection response', () => {
-    const api = new RoadizApi(process.env.API_BASE_URL, process.env.API_NON_PREVIEW_API_KEY, false)
+    const api = new RoadizApi(process.env.API_BASE_URL || '', process.env.API_NON_PREVIEW_API_KEY || '', false)
 
     return api.getNodesSources({}).then((response) => {
         expect(response.data["hydra:totalItems"]).toBeGreaterThan(1)
@@ -42,7 +42,7 @@ test('Test NodesSources HydraCollection response', () => {
 })
 
 test('Test CommonContent Response HydraCollection response', () => {
-    const api = new RoadizApi(process.env.API_BASE_URL, process.env.API_NON_PREVIEW_API_KEY, false)
+    const api = new RoadizApi(process.env.API_BASE_URL || '', process.env.API_NON_PREVIEW_API_KEY || '', false)
 
     return api.getNodesSources({}).then((response) => {
         expect(response.data["hydra:totalItems"]).toBeGreaterThan(1)
@@ -52,17 +52,17 @@ test('Test CommonContent Response HydraCollection response', () => {
 })
 
 test('Bad Api key preview API', () => {
-    const api = new RoadizApi(process.env.API_BASE_URL, process.env.API_NON_PREVIEW_API_KEY, true)
+    const api = new RoadizApi(process.env.API_BASE_URL || '', process.env.API_NON_PREVIEW_API_KEY || '', true)
 
     return api.getNodesSources({
         page: 1
     }).catch((response: AxiosError) => {
-        expect(response.response.status).toBe(403)
+        expect(response.response?.status).toBe(403)
     })
 })
 
 test('Configured preview API', () => {
-    const api = new RoadizApi(process.env.API_BASE_URL, process.env.API_PREVIEW_API_KEY, true)
+    const api = new RoadizApi(process.env.API_BASE_URL || '', process.env.API_PREVIEW_API_KEY || '', true)
 
     return api.getNodesSources({
         page: 1
