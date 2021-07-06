@@ -9,9 +9,10 @@
   "main": "dist/index.js",
   "author": "Ambroise Maupate <ambroise@rezo-zero.com>",
   "license": "MIT",
-  "types": "./index.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
-    "**/*.d.ts"
+    "dist/index.d.ts",
+    "types/*.d.ts"
   ],
   "publishConfig": {
     "access": "public"

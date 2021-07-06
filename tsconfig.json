@@ -3,6 +3,7 @@
         "strict": true,
         "baseUrl": ".",
         "module": "amd",
+        "declaration": true,
         "moduleResolution": "Node",
         "esModuleInterop": true,
         "resolveJsonModule": true,
