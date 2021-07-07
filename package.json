@@ -6,13 +6,11 @@
     "url": "https://github.com/roadiz/abstract-api-client",
     "type": "git"
   },
-  "main": "dist/index.js",
+  "main": "dist/RoadizApi.js",
   "author": "Ambroise Maupate <ambroise@rezo-zero.com>",
   "license": "MIT",
-  "types": "./dist/index.d.ts",
   "files": [
-    "dist/index.d.ts",
-    "types/*.d.ts"
+    "dist"
   ],
   "publishConfig": {
     "access": "public"

@@ -108,3 +108,5 @@ dist
 # Pure library, do not lock anything
 yarn.lock
 package.lock
+
+package/

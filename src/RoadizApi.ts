@@ -1,9 +1,9 @@
-import {AlternateLink, RoadizApiNSParams, RoadizApiSearchParams, RoadizApiTagsParams} from '../types/roadiz-api'
-import {ArchivesHydraCollection, HydraCollection} from '../types/hydra'
-import {RoadizNodesSources, RoadizSearchResultItem, RoadizTag} from '../types/roadiz'
+import {AlternateLink, RoadizApiNSParams, RoadizApiSearchParams, RoadizApiTagsParams} from './types/roadiz-api'
+import {ArchivesHydraCollection, HydraCollection} from './types/hydra'
+import {RoadizNodesSources, RoadizSearchResultItem, RoadizTag} from './types/roadiz'
 import axios, {AxiosInstance, AxiosResponse} from 'axios'
 import qs from 'qs'
-import {CommonContentResponse} from '../types/common'
+import {CommonContentResponse} from './types/common'
 
 export default class RoadizApi {
     protected axios: AxiosInstance
