@@ -10,7 +10,7 @@
  * @see https://docs.roadiz.io/en/latest/developer/nodes-system/intro.html#what-is-a-node-type
  */
 
-import { RoadizDocument, RoadizNodesSources } from '../../types/roadiz'
+import { RoadizDocument, RoadizNodesSources } from '../../src/types/roadiz'
 
 //
 // Content block
@@ -31,9 +31,7 @@ interface NSContentBlock extends RoadizNodesSources {
 // Reachable: false
 // Publishable: false
 // Visible: true
-interface NSNeutral extends RoadizNodesSources {
-
-}
+type NSNeutral = RoadizNodesSources
 
 //
 // Page
