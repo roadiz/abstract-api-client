@@ -1,7 +1,7 @@
 import { AlternateLink, RoadizApiNSParams, RoadizApiSearchParams, RoadizApiTagsParams } from './types/roadiz-api'
 import { ArchivesHydraCollection, HydraCollection } from './types/hydra'
 import { RoadizNodesSources, RoadizSearchResultItem, RoadizTag } from './types/roadiz'
-import axios, { AxiosInstance, AxiosResponse } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import qs from 'qs'
 import { CommonContentResponse } from './types/common'
 
@@ -29,8 +29,12 @@ export default class RoadizApi {
         this.preview = preview
         this.debug = debug
 
-        this.axios.interceptors.request.use((config) => {
+        this.axios.interceptors.request.use((config: AxiosRequestConfig) => {
             config.params = config.params || {}
+            /*
+             * Need to set at lease
+             */
+            config = this.onApiRequest(config)
 
             if (this.preview) {
                 config.params['_preview'] = this.preview
@@ -40,6 +44,14 @@ export default class RoadizApi {
             }
             return config
         })
+    }
+
+    /**
+     * @override Override this method to alter each Axios requests
+     * @param config
+     */
+    protected onApiRequest (config: AxiosRequestConfig): AxiosRequestConfig {
+        return config
     }
 
     public getCommonContent<T = CommonContentResponse>(params: RoadizApiNSParams): Promise<AxiosResponse<T>> {
