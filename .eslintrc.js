@@ -4,8 +4,9 @@ module.exports = {
         browser: true,
         node: true,
     },
-    extends: ['prettier', 'plugin:prettier/recommended'],
-    plugins: ['prettier'],
+    parser: '@typescript-eslint/parser',
+    plugins: ['@typescript-eslint'],
+    extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
     rules: {
         'no-undef': 'off',
         'no-use-before-define': 'off',
