@@ -50,7 +50,7 @@ export default class RoadizApi {
      * @override Override this method to alter each Axios requests
      * @param config
      */
-    protected onApiRequest (config: AxiosRequestConfig): AxiosRequestConfig {
+    protected onApiRequest(config: AxiosRequestConfig): AxiosRequestConfig {
         return config
     }
 
@@ -131,6 +131,15 @@ export default class RoadizApi {
         return this.axios.get<ArchivesHydraCollection>(`/${type}/archives`, {
             params,
         })
+    }
+
+    /**
+     * Generic method for any endpoint
+     * @param endpoint
+     * @param params
+     */
+    public get<T>(endpoint: string, params?: RoadizApiNSParams): Promise<AxiosResponse<T>> {
+        return this.axios.get<T>(endpoint, { params })
     }
 
     public async fetchAllUrlsForLocale(_locale = 'fr'): Promise<Array<string>> {
