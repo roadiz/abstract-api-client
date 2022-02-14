@@ -1,48 +1,48 @@
 {
-  "name": "@roadiz/abstract-api-client",
-  "version": "2.0.0",
-  "description": "Roadiz abstract API Typescript client interfaces and SDK",
-  "repository": {
-    "url": "https://github.com/roadiz/abstract-api-client",
-    "type": "git"
-  },
-  "main": "dist/RoadizApi.js",
-  "author": "Ambroise Maupate <ambroise@rezo-zero.com>",
-  "license": "MIT",
-  "files": [
-    "dist"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "scripts": {
-    "test": "jest",
-    "build": "tsc -p tsconfig-build.json",
-    "prepublishOnly": "yarn build",
-    "lint": "eslint --fix --ext \".js,.ts,.json\" ."
-  },
-  "dependencies": {
-    "axios": "^0.21.1",
-    "qs": "^6.10.1"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.14.6",
-    "@babel/plugin-transform-runtime": "^7.14.5",
-    "@babel/preset-env": "^7.14.7",
-    "@babel/preset-typescript": "^7.14.5",
-    "@types/jest": "^26.0.23",
-    "@types/qs": "^6.9.6",
-    "@typescript-eslint/eslint-plugin": "^4.28.2",
-    "@typescript-eslint/parser": "^4.28.2",
-    "babel-core": "^6.26.3",
-    "babel-jest": "^27.0.5",
-    "dotenv": "^10.0.0",
-    "eslint": "^7.29.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "jest": "^27.0.5",
-    "prettier": "^2.3.1",
-    "regenerator-runtime": "^0.13.7",
-    "typescript": "^4.3.5"
-  }
+    "name": "@roadiz/abstract-api-client",
+    "version": "2.0.0",
+    "description": "Roadiz abstract API Typescript client interfaces and SDK",
+    "repository": {
+        "url": "https://github.com/roadiz/abstract-api-client",
+        "type": "git"
+    },
+    "main": "dist/RoadizApi.js",
+    "author": "Ambroise Maupate <ambroise@rezo-zero.com>",
+    "license": "MIT",
+    "files": [
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "scripts": {
+        "test": "jest",
+        "build": "tsc -p tsconfig-build.json",
+        "prepublishOnly": "yarn build",
+        "lint": "eslint --fix --ext \".js,.ts,.json\" . --ignore-pattern \"dist/*\""
+    },
+    "dependencies": {
+        "axios": "^0.21.1",
+        "qs": "^6.10.1"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.14.6",
+        "@babel/plugin-transform-runtime": "^7.14.5",
+        "@babel/preset-env": "^7.14.7",
+        "@babel/preset-typescript": "^7.14.5",
+        "@types/jest": "^26.0.23",
+        "@types/qs": "^6.9.6",
+        "@typescript-eslint/eslint-plugin": "^4.28.2",
+        "@typescript-eslint/parser": "^4.28.2",
+        "babel-core": "^6.26.3",
+        "babel-jest": "^27.0.5",
+        "dotenv": "^10.0.0",
+        "eslint": "^7.29.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^3.4.0",
+        "jest": "^27.0.5",
+        "prettier": "^2.3.1",
+        "regenerator-runtime": "^0.13.7",
+        "typescript": "^4.3.5"
+    }
 }

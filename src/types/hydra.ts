@@ -1,4 +1,4 @@
-import {RoadizArchivesList} from './roadiz'
+import { RoadizArchivesList } from './roadiz'
 
 /**
  * Hydra JSON-LD collection interface
