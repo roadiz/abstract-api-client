@@ -9,7 +9,6 @@
         "outDir": "dist",
         "lib": ["es2016", "dom"]
     },
-    "files": ["src/RoadizApi.ts"],
-    "include": ["tests/**/*"],
+    "include": ["src/**/*", "tests/**/*"],
     "exclude": ["dist"]
 }

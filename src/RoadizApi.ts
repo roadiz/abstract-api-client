@@ -1,9 +1,14 @@
-import { AlternateLink, RoadizApiNSParams, RoadizApiSearchParams, RoadizApiTagsParams } from './types/roadiz-api'
-import { ArchivesHydraCollection, HydraCollection } from './types/hydra'
-import { RoadizNodesSources, RoadizSearchResultItem, RoadizTag } from './types/roadiz'
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import qs from 'qs'
-import { CommonContentResponse } from './types/common'
+import {
+    RoadizRequestNSParams,
+    RoadizRequestConfig,
+    RoadizRequestParams,
+    RoadizRequestSearchParams,
+    RoadizRequestWebResponseParams,
+} from './types/request'
+import { ArchivesHydraCollection, HydraCollection } from './types/hydra'
+import { RoadizAlternateLink, RoadizNodesSources, RoadizSearchResultItem, RoadizWebResponse } from './types/roadiz'
 
 export default class RoadizApi {
     protected axios: AxiosInstance
@@ -16,7 +21,7 @@ export default class RoadizApi {
         this.axios.defaults.withCredentials = false
         this.axios.defaults.headers.common = {
             'X-Api-Key': apiKey,
-            Accept: 'application/json',
+            Accept: 'application/ld+json',
         }
         this.axios.defaults.baseURL = baseURL
         /*
@@ -54,35 +59,15 @@ export default class RoadizApi {
         return config
     }
 
-    public getCommonContent<T = CommonContentResponse>(params: RoadizApiNSParams): Promise<AxiosResponse<T>> {
-        return this.axios.get<T>('/common', { params })
-    }
-
-    public getNodesSources(params: RoadizApiNSParams): Promise<AxiosResponse<HydraCollection<RoadizNodesSources>>> {
-        return this.axios.get<HydraCollection<RoadizNodesSources>>(`/nodes-sources`, {
+    public getNodesSources(params: RoadizRequestNSParams): Promise<AxiosResponse<HydraCollection<RoadizNodesSources>>> {
+        return this.get<HydraCollection<RoadizNodesSources>, RoadizRequestNSParams>(`/nodes_sources`, {
             params,
         })
     }
 
-    /*
-     * You should implement get`NodeType` method that use getNodesSourcesForType internally
-     * and override return type.
-     */
-    public getNodesSourcesForType<T = RoadizNodesSources>(
-        type: string,
-        params: RoadizApiNSParams
-    ): Promise<AxiosResponse<HydraCollection<T>>> {
-        return this.axios.get<HydraCollection<T>>(`/${type}`, {
+    public getWebResponseByPath(params: RoadizRequestWebResponseParams): Promise<AxiosResponse<RoadizWebResponse>> {
+        return this.get<RoadizWebResponse, RoadizRequestWebResponseParams>(`/web_response_by_path`, {
             params,
-        })
-    }
-
-    public getSingleNodesSourcesByPath(path = ''): Promise<AxiosResponse<RoadizNodesSources>> {
-        const cleanPath = path.startsWith('/') ? path : '/' + path
-        return this.axios.get<RoadizNodesSources>('/nodes-sources/by-path', {
-            params: {
-                path: cleanPath,
-            },
         })
     }
 
@@ -90,43 +75,16 @@ export default class RoadizApi {
      * Returns RoadizSearchResultItem if search param is longer than 4 chars. Else return directly a RoadizNodesSources
      */
     public searchNodesSourcesByPath(
-        params: RoadizApiSearchParams
+        params: RoadizRequestSearchParams
     ): Promise<AxiosResponse<HydraCollection<RoadizSearchResultItem | RoadizNodesSources>>> {
-        return this.axios.get<HydraCollection<RoadizSearchResultItem | RoadizNodesSources>>('/nodes-sources/search', {
+        return this.axios.get<HydraCollection<RoadizSearchResultItem | RoadizNodesSources>>('/nodes_sources/search', {
             params,
         })
     }
 
-    public getTagsForType(
-        type: string,
-        params: RoadizApiTagsParams
-    ): Promise<AxiosResponse<HydraCollection<RoadizTag>>> {
-        return this.axios.get<HydraCollection<RoadizTag>>(`/${type}/tags`, {
-            params,
-        })
-    }
-
-    /*
-     * {
-     *     "hydra:member": {
-     *         "2021": {
-     *             "2021-06": "2021-06-01T00:00:00+02:00",
-     *             "2021-05": "2021-05-01T00:00:00+02:00",
-     *             "2021-04": "2021-04-01T00:00:00+02:00"
-     *         }
-     *     },
-     *     "hydra:totalItems": 1,
-     *     "@id": "/api/1.0/post/archives",
-     *     "@type": "hydra:Collection",
-     *     "hydra:view": {
-     *         "@id": "/api/1.0/post/archives?_locale=fr",
-     *         "@type": "hydra:PartialCollectionView"
-     *     }
-     * }
-     */
     public getArchivesForType(
         type: string,
-        params: RoadizApiNSParams
+        params: RoadizRequestNSParams
     ): Promise<AxiosResponse<ArchivesHydraCollection>> {
         return this.axios.get<ArchivesHydraCollection>(`/${type}/archives`, {
             params,
@@ -134,12 +92,12 @@ export default class RoadizApi {
     }
 
     /**
-     * Generic method for any endpoint
-     * @param endpoint
-     * @param params
+     * Generic method for any url
+     * @param url
+     * @param config
      */
-    public get<T>(endpoint: string, params?: RoadizApiNSParams): Promise<AxiosResponse<T>> {
-        return this.axios.get<T>(endpoint, { params })
+    public get<T, R = RoadizRequestParams>(url: string, config?: RoadizRequestConfig<R>): Promise<AxiosResponse<T>> {
+        return this.axios.get<T>(url, config)
     }
 
     public async fetchAllUrlsForLocale(_locale = 'fr'): Promise<Array<string>> {
@@ -169,7 +127,7 @@ export default class RoadizApi {
         return refs
     }
 
-    getAlternateLinks(response: AxiosResponse): Array<AlternateLink> {
+    getAlternateLinks(response: AxiosResponse): Array<RoadizAlternateLink> {
         if (!response.headers.link) return []
 
         return response.headers.link
@@ -186,7 +144,7 @@ export default class RoadizApi {
                 return {
                     url: attributes[0].split('<').join('').split('>').join('').trim(),
                     locale: attributes[2].split('hreflang="').join('').split('"').join('').trim(),
-                } as AlternateLink
+                } as RoadizAlternateLink
             })
     }
 }

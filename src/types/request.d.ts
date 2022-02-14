@@ -3,12 +3,13 @@
  *
  * @see https://github.com/roadiz/AbstractApiTheme/blob/develop/README.md#listing-nodes-sources
  */
-export interface AlternateLink {
-    url: string
-    locale: string
+import { AxiosRequestConfig } from 'axios'
+
+export interface RoadizRequestConfig<P> extends AxiosRequestConfig {
+    params: P
 }
 
-export interface RoadizApiBaseParams {
+export interface RoadizRequestParams {
     itemsPerPage?: number
     page?: number
     _preview?: boolean
@@ -16,7 +17,7 @@ export interface RoadizApiBaseParams {
     properties?: string[]
 }
 
-export interface RoadizApiNSParams extends RoadizApiBaseParams {
+export interface RoadizRequestNSParams extends RoadizRequestParams {
     search?: string
     order?: {
         [key: string]: 'ASC' | 'DESC'
@@ -25,7 +26,7 @@ export interface RoadizApiNSParams extends RoadizApiBaseParams {
     path?: string
     id?: number
     title?: string
-    publishedAt?: RoadizApiPublishedParams
+    publishedAt?: RoadizRequestPublishedParams
     tags?: Array<string>
     tagExclusive?: boolean
     not?: number | string | Array<number | string>
@@ -40,32 +41,37 @@ export interface RoadizApiNSParams extends RoadizApiBaseParams {
     'node.bNodes.field.name'?: string
 }
 
-export interface RoadizApiTagsParams extends RoadizApiBaseParams {
+export interface RoadizRequestTagsParams extends RoadizRequestParams {
     search?: string
     order?: {
         [key: string]: 'ASC' | 'DESC'
     }
     tagName?: string
-    publishedAt?: RoadizApiPublishedParams
-    parent?: string | number
+    'parent.tagName'?: string
+    'nodes.nodeType.name'?: string
+    'nodes.parent.nodeName'?: string
     visible?: boolean
 }
 
-export interface RoadizApiPublishedParams {
+export interface RoadizRequestPublishedParams {
     after?: string
     before?: string
     strictly_after?: string
     strictly_before?: string
 }
 
-export interface RoadizApiSearchParams extends RoadizApiBaseParams {
+export interface RoadizRequestSearchParams extends RoadizRequestParams {
     search?: string
     archive?: string
     id?: number
     title?: string
     tags?: Array<string>
-    publishedAt?: RoadizApiPublishedParams
+    publishedAt?: RoadizRequestPublishedParams
     'node.nodeType'?: string | Array<string>
     'node.parent'?: string | number
     'node.visible'?: boolean
+}
+
+export interface RoadizRequestWebResponseParams extends RoadizRequestParams {
+    path: string
 }

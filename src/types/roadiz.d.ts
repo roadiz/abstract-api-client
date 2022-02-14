@@ -3,6 +3,8 @@
  *
  * @see https://docs.roadiz.io/en/latest/developer/nodes-system/intro.html#what-is-a-node-type
  */
+import { JsonLdObject } from './jsonld'
+import { HydraCollection } from './hydra'
 
 export interface RoadizNodeType {
     name: string
@@ -22,7 +24,7 @@ export interface RoadizTranslation {
     locale: string // ISO 2-letter language code (fr, en, de).
 }
 
-export interface RoadizNodesSources {
+export interface RoadizNodesSources extends JsonLdObject {
     node: RoadizNode
     translation?: RoadizTranslation
     slug: string // First urlAlias OR node.nodeName
@@ -33,11 +35,7 @@ export interface RoadizNodesSources {
     metaTitle?: string
     metaKeywords?: string
     metaDescription?: string
-    blocks?: Array<RoadizWalker>
-    head?: RoadizHead
     urlAliases?: Array<RoadizUrlAlias>
-    '@type': string
-    '@id'?: string
 }
 
 export interface RoadizSearchHighlighting {
@@ -62,33 +60,15 @@ export interface RoadizArchivesList {
     [key: string]: RoadizArchivesYear
 }
 
-export interface RoadizHead {
-    facebookUrl?: string
-    twitterUrl?: string
-    linkedinUrl?: string
-    instagramUrl?: string
-    youtubeUrl?: string
-    shareImage?: RoadizDocument
-    googleAnalytics?: string
-    googleTagManager?: string
-    matomoUrl?: string
-    matomoSiteId?: string
-    policyUrl?: string
-    siteName?: string
-    mainColor?: string
-    homePageUrl?: string
-}
-
 export interface RoadizUrlAlias {
     alias?: string
 }
 
-export interface RoadizTag {
+export interface RoadizTag extends JsonLdObject {
     name?: string
     color?: string
     tagName?: string
     visible?: boolean
-    '@type'?: string
     documents: Array<RoadizDocument>
 }
 
@@ -113,13 +93,12 @@ export interface RoadizAttributeTranslation {
     translation: RoadizTranslation
 }
 
-export interface RoadizWalker {
-    '@type': string
+export interface RoadizWalker extends JsonLdObject {
     item: RoadizNodesSources
     children: Array<RoadizWalker>
 }
 
-export interface RoadizDocument {
+export interface RoadizDocument extends JsonLdObject {
     processable: boolean // True if document can be processed by an image optimizer
     relativePath?: string
     alt?: string
@@ -133,13 +112,49 @@ export interface RoadizDocument {
     filesize?: string
     thumbnail?: RoadizDocument // Only for none displayable documents, i.e. PDFs
     documentTranslations?: Array<RoadizDocumentTranslation>
-    '@type': string
     url?: string
 }
 
-export interface RoadizDocumentTranslation {
+export interface RoadizDocumentTranslation extends JsonLdObject {
     name?: string
     description?: string
     copyright?: string
     translation?: RoadizTranslation
+}
+
+export interface RoadizAlternateLink {
+    url: string
+    locale: string
+}
+
+export interface RoadizWebResponse extends JsonLdObject {
+    head: string
+    item: RoadizWebResponseItem
+    block: string
+    breadcrumbs: string
+}
+
+export interface RoadizWebResponseHead {
+    facebookUrl?: string
+    twitterUrl?: string
+    linkedinUrl?: string
+    instagramUrl?: string
+    youtubeUrl?: string
+    shareImage?: RoadizDocument
+    googleAnalytics?: string
+    googleTagManager?: string
+    matomoUrl?: string
+    matomoSiteId?: string
+    policyUrl?: string
+    siteName?: string
+    mainColor?: string
+    homePageUrl?: string
+}
+
+export interface RoadizWebResponseItem extends JsonLdObject {
+    url: string
+}
+
+export interface RoadizBreadcrumbs extends JsonLdObject {
+    items: HydraCollection<JsonLdObject>
 }

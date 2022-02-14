@@ -1,4 +1,5 @@
 import { RoadizArchivesList } from './roadiz'
+import { JsonLdObject } from './jsonld'
 
 /**
  * Hydra JSON-LD collection interface
@@ -6,21 +7,15 @@ import { RoadizArchivesList } from './roadiz'
  * @see https://www.hydra-cg.com/spec/latest/core/
  */
 
-export interface HydraCollection<T> {
+export interface HydraCollection<T> extends JsonLdObject {
     'hydra:member': Array<T>
     'hydra:totalItems': number
     'hydra:view': HydraView
 }
 
-export interface ArchivesHydraCollection {
-    'hydra:member': RoadizArchivesList
-    'hydra:totalItems': number
-    'hydra:view': HydraView
-}
+export type ArchivesHydraCollection = HydraCollection<RoadizArchivesList>
 
-export interface HydraView {
-    '@id': string
-    '@type': string
+export interface HydraView extends JsonLdObject {
     'hydra:first'?: string
     'hydra:last'?: string
     'hydra:next'?: string
