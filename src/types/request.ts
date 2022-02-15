@@ -62,14 +62,6 @@ export interface RoadizRequestPublishedParams {
 
 export interface RoadizRequestSearchParams extends RoadizRequestParams {
     search?: string
-    archive?: string
-    id?: number
-    title?: string
-    tags?: Array<string>
-    publishedAt?: RoadizRequestPublishedParams
-    'node.nodeType'?: string | Array<string>
-    'node.parent'?: string | number
-    'node.visible'?: boolean
 }
 
 export interface RoadizRequestWebResponseParams extends RoadizRequestParams {
