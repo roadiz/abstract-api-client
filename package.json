@@ -17,7 +17,7 @@
     },
     "scripts": {
         "test": "jest",
-        "build": "tsc -p tsconfig-build.json",
+        "build": "rm -rf ./dist/ && tsc -p tsconfig-build.json",
         "prepublishOnly": "yarn build",
         "lint": "eslint --fix --ext \".js,.ts,.json\" . --ignore-pattern \"dist/*\""
     },
