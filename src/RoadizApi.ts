@@ -12,10 +12,11 @@ import { RoadizAlternateLink, RoadizNodesSources, RoadizSearchResultItem, Roadiz
 import merge from 'deepmerge'
 
 export default class RoadizApi {
-    protected axios: AxiosInstance
     protected apiKey?: string
     protected preview?: boolean
     protected debug?: boolean
+
+    public axios: AxiosInstance
 
     public constructor(
         baseURL: string,
@@ -45,7 +46,6 @@ export default class RoadizApi {
         const axiosDefaults = defaults ? merge(internalDefaults, defaults) : internalDefaults
 
         this.axios = axios.create(axiosDefaults)
-
         this.apiKey = apiKey
         this.preview = preview
         this.debug = debug
