@@ -128,10 +128,10 @@ export interface RoadizAlternateLink {
 }
 
 export interface RoadizWebResponse extends JsonLdObject {
-    head: string
+    head: RoadizWebResponseHead
     item: RoadizWebResponseItem
     block: string
-    breadcrumbs: string
+    breadcrumbs: RoadizBreadcrumbs
 }
 
 export interface RoadizWebResponseHead {
