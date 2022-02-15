@@ -19,13 +19,9 @@ export default class RoadizApi {
 
     public constructor(
         baseURL: string,
-        {
-            apiKey,
-            preview,
-            debug,
-            defaults,
-        }: { apiKey?: string; preview?: boolean; debug?: boolean; defaults?: AxiosRequestConfig }
+        config: { apiKey?: string; preview?: boolean; debug?: boolean; defaults?: AxiosRequestConfig } = {}
     ) {
+        const { apiKey, preview, debug, defaults } = config
         const headers: { common: Record<string, string> } = {
             common: {
                 Accept: 'application/ld+json',
