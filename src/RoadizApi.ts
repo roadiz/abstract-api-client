@@ -81,7 +81,7 @@ export default class RoadizApi {
     public searchNodesSourcesByPath(
         params: RoadizRequestSearchParams
     ): Promise<AxiosResponse<HydraCollection<RoadizSearchResultItem | RoadizNodesSources>>> {
-        return this.axios.get<HydraCollection<RoadizSearchResultItem | RoadizNodesSources>>('/nodes_sources/search', {
+        return this.get<HydraCollection<RoadizSearchResultItem | RoadizNodesSources>>('/nodes_sources/search', {
             params,
         })
     }
