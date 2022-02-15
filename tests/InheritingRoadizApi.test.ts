@@ -1,25 +1,20 @@
 import RoadizApi from '../src/RoadizApi'
-import { RoadizApiNSParams, RoadizApiTagsParams } from '../src/types/roadiz-api'
-import { NSNeutral, NSPage } from './types/roadiz-app-20210623-220029'
+import { NSPage } from './types/roadiz-app-20210623-220029'
 import { RoadizDocument } from '../src/types/roadiz'
+import { RoadizRequestNSParams } from '../src/types/request'
+import { HydraCollection } from '../dist/types/hydra'
 
-class HeadlessRoadizApi extends RoadizApi {
-    getPages(params: RoadizApiNSParams) {
-        return this.getNodesSourcesForType<NSPage>('page', params)
+class CustomRoadizApi extends RoadizApi {
+    getPages(params: RoadizRequestNSParams) {
+        return this.get<HydraCollection<NSPage>, RoadizRequestNSParams>('pages', { params })
     }
-    getPagesTags(params: RoadizApiTagsParams) {
-        return this.getTagsForType('page', params)
-    }
-    getNeutrals(params: RoadizApiNSParams) {
-        return this.getNodesSourcesForType<NSNeutral>('neutral', params)
-    }
-    getNeutralsTags(params: RoadizApiTagsParams) {
-        return this.getTagsForType('neutral', params)
-    }
+    // getNeutrals(params: RoadizRequestNSParams) {
+    //     return this.get<HydraCollection<NSNeutral>, RoadizRequestNSParams>('neutral', { params })
+    // }
 }
 
 test('Headless API: NSPage', () => {
-    const api = new HeadlessRoadizApi(process.env.API_BASE_URL || '', process.env.API_NON_PREVIEW_API_KEY || '', false)
+    const api = new CustomRoadizApi(process.env.API_BASE_URL || '', { apiKey: process.env.API_NON_PREVIEW_API_KEY })
 
     return api
         .getPages({
@@ -42,26 +37,27 @@ test('Headless API: NSPage', () => {
 })
 
 test('Headless API: By path', () => {
-    const api = new HeadlessRoadizApi(process.env.API_BASE_URL || '', process.env.API_NON_PREVIEW_API_KEY || '', false)
+    const api = new CustomRoadizApi(process.env.API_BASE_URL || '', {
+        apiKey: process.env.API_NON_PREVIEW_API_KEY,
+    })
 
-    return api.getSingleNodesSourcesByPath('/').then((response) => {
+    return api.getWebResponseByPath('/').then((response) => {
         expect(response.status).toBe(200)
         expect(response.data).toBeDefined()
-        expect(response.data['@type']).toBeDefined()
-        expect(response.data.url).toBe('/')
+        expect(response.data.item).toBeDefined()
     })
 })
 
 test('Headless API: Home alternate links', () => {
-    const api = new HeadlessRoadizApi(process.env.API_BASE_URL || '', process.env.API_NON_PREVIEW_API_KEY || '', false)
+    const api = new CustomRoadizApi(process.env.API_BASE_URL || '', { apiKey: process.env.API_NON_PREVIEW_API_KEY })
 
-    return api.getSingleNodesSourcesByPath('/').then((response) => {
+    return api.getWebResponseByPath('/').then((response) => {
         expect(api.getAlternateLinks(response)).toBeDefined()
     })
 })
 
 test('Headless API: Sitemap FR', () => {
-    const api = new HeadlessRoadizApi(process.env.API_BASE_URL || '', process.env.API_NON_PREVIEW_API_KEY || '', false)
+    const api = new CustomRoadizApi(process.env.API_BASE_URL || '', { apiKey: process.env.API_NON_PREVIEW_API_KEY })
 
     return api.fetchAllUrlsForLocale('fr').then((urls) => {
         urls.forEach((url: string) => {
@@ -71,7 +67,7 @@ test('Headless API: Sitemap FR', () => {
 })
 
 test('Headless API: Sitemap EN', () => {
-    const api = new HeadlessRoadizApi(process.env.API_BASE_URL || '', process.env.API_NON_PREVIEW_API_KEY || '', false)
+    const api = new CustomRoadizApi(process.env.API_BASE_URL || '', { apiKey: process.env.API_NON_PREVIEW_API_KEY })
 
     return api.fetchAllUrlsForLocale('en').then((urls) => {
         urls.forEach((url: string) => {
@@ -80,16 +76,16 @@ test('Headless API: Sitemap EN', () => {
     })
 })
 
-test('Headless API: NSNeutral', () => {
-    const api = new HeadlessRoadizApi(process.env.API_BASE_URL || '', process.env.API_NON_PREVIEW_API_KEY || '', false)
-
-    return api
-        .getNeutrals({
-            page: 1,
-        })
-        .then((response) => {
-            expect(response.status).toBe(200)
-            expect(response.data['hydra:member'][0]).toBeDefined()
-            expect(response.data['hydra:member'][0]['@type']).toBe('Neutral')
-        })
-})
+// test('Headless API: NSNeutral', () => {
+//     const api = new CustomRoadizApi(process.env.API_BASE_URL || '', { apiKey: process.env.API_NON_PREVIEW_API_KEY })
+//
+//     return api
+//         .getNeutrals({
+//             page: 1,
+//         })
+//         .then((response) => {
+//             expect(response.status).toBe(200)
+//             expect(response.data['hydra:member'][0]).toBeDefined()
+//             expect(response.data['hydra:member'][0]['@type']).toBe('Neutral')
+//         })
+// })
