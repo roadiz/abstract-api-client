@@ -6,15 +6,19 @@
         "declaration": true,
         "moduleResolution": "node",
         "esModuleInterop": true,
-        "outDir":"dist",
+        "outDir": "dist",
         "lib": [
             "es2016",
             "dom"
         ]
     },
     "files": [
-        "src/RoadizApi.ts",
+        "src/RoadizApi.ts"
     ],
-    "include": ["tests/**/*"],
-    "exclude": ["dist"],
+    "include": [
+        "tests/**/*"
+    ],
+    "exclude": [
+        "dist"
+    ]
 }

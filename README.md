@@ -5,12 +5,12 @@ Based on *Axios* HTTP client.
 
 ## Usage
 
-```json
+```bash
 yarn add @roadiz/abstract-api-client
 ```
 
+tsconfig.json
 ```json
-// tsconfig.json
 {
   "compilerOptions": {
     "types": [
@@ -24,26 +24,20 @@ yarn add @roadiz/abstract-api-client
 
 - Download latest `d.ts` definition file from Roadiz backoffice
 - Extend `RoadizApi` class
-- Add `get{YourNodeType}` methods for each of your node-types. RoadizApi methods use Typescript generics to easily declare
-your return type inside collections: `this.getNodesSourcesForType<NSPage>('page', params)` 
-- Other methods can be overridden without specifying type
 
 ```ts
 export default class MyAwesomeRoadizApi extends RoadizApi {
     /*
      * Page node-type
      */
-    getPages(params: RoadizApiNSParams) {
-        return this.getNodesSourcesForType<NSPage>('page', params)
-    }
-    getPagesTags(params: RoadizApiTagsParams) {
-        return this.getTagsForType('page', params)
+    getPages(params: RoadizRequestNSParams) {
+        return this.get<HydraCollection<NSPage>, RoadizRequestNSParams>('pages', { params })
     }
     
     /*
      * BlogPost node-type
      */
-    getBlogPosts(params: RoadizApiNSParams) {
+    getBlogPosts(params: RoadizRequestNSParams) {
         // Additional default params…
         params = {
             order: {
@@ -51,13 +45,7 @@ export default class MyAwesomeRoadizApi extends RoadizApi {
             },
             ...params,
         }
-        return this.getNodesSourcesForType<NSBlogPost>('blog-post', params)
-    }
-    getBlogPostsTags(params: RoadizApiTagsParams) {
-        return this.getTagsForType('blog-post', params)
-    }
-    getBlogPostsArchives(params: RoadizApiNSParams) {
-        return this.getArchivesForType('blog-post', params)
+        return this.get<HydraCollection<NSBlockPost>, RoadizRequestNSParams>('blog_posts', { params })
     }
 }
 ```
@@ -65,11 +53,7 @@ export default class MyAwesomeRoadizApi extends RoadizApi {
 ### Fetch all URLs for a sitemap
 
 ```ts
-const api = new MyAwesomeRoadizApi(
-    process.env.API_BASE_URL, 
-    process.env.API_NON_PREVIEW_API_KEY, 
-    false
-)
+const api = new RoadizApi(process.env.API_BASE_URL,)
 
 return api.fetchAllUrlsForLocale('fr').then((urls: Array<string>) => {
     // build your sitemap
@@ -83,13 +67,9 @@ on HTTP response header `Link`.
 API `getAlternateLinks` method will return a `Array<AlternateLink>` from an `AxiosResponse`:
 
 ```ts
-const api = new MyAwesomeRoadizApi(
-    process.env.API_BASE_URL, 
-    process.env.API_NON_PREVIEW_API_KEY, 
-    false
-)
+const api = new RoadizApi(process.env.API_BASE_URL)
 
-api.getSingleNodesSourcesByPath('/').then((response) => {
+api.getWebResponseByPath('/').then((response) => {
     /*
      * [{
      *     url: '/',
