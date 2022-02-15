@@ -18,24 +18,38 @@ export default class RoadizApi {
 
     public constructor(
         baseURL: string,
-        { apiKey, preview, debug }: { apiKey?: string; preview?: boolean; debug?: boolean }
+        {
+            apiKey,
+            preview,
+            debug,
+            defaults,
+        }: { apiKey?: string; preview?: boolean; debug?: boolean; defaults?: AxiosRequestConfig }
     ) {
-        const headers: Record<string, string> = {
-            Accept: 'application/ld+json',
+        const headers: { common: Record<string, string> } = {
+            common: {
+                Accept: 'application/ld+json',
+            },
         }
 
-        if (apiKey) headers['X-Api-Key'] = apiKey
+        if (apiKey) headers.common['X-Api-Key'] = apiKey
+
+        const internalDefaults: AxiosRequestConfig = {
+            withCredentials: false,
+            headers,
+            baseURL,
+            /*
+             * Use qs to allow array query params
+             */
+            paramsSerializer: (params) => {
+                return qs.stringify(params)
+            },
+        }
+
+        const axiosDefaults = defaults ? { ...internalDefaults, ...defaults } : internalDefaults
 
         this.axios = axios.create()
-        this.axios.defaults.withCredentials = false
-        this.axios.defaults.headers.common = headers
-        this.axios.defaults.baseURL = baseURL
-        /*
-         * Use qs to allow array query params
-         */
-        this.axios.defaults.paramsSerializer = (params) => {
-            return qs.stringify(params)
-        }
+        this.axios.defaults = axiosDefaults
+
         this.apiKey = apiKey
         this.preview = preview
         this.debug = debug
