@@ -12,17 +12,23 @@ import { RoadizAlternateLink, RoadizNodesSources, RoadizSearchResultItem, Roadiz
 
 export default class RoadizApi {
     protected axios: AxiosInstance
-    protected apiKey: string
-    protected preview: boolean
-    protected debug: boolean
+    protected apiKey?: string
+    protected preview?: boolean
+    protected debug?: boolean
 
-    public constructor(baseURL: string, apiKey: string, preview = false, debug = false) {
-        this.axios = axios.create()
-        this.axios.defaults.withCredentials = false
-        this.axios.defaults.headers.common = {
-            'X-Api-Key': apiKey,
+    public constructor(
+        baseURL: string,
+        { apiKey, preview, debug }: { apiKey?: string; preview?: boolean; debug?: boolean }
+    ) {
+        const headers: Record<string, string> = {
             Accept: 'application/ld+json',
         }
+
+        if (apiKey) headers['X-Api-Key'] = apiKey
+
+        this.axios = axios.create()
+        this.axios.defaults.withCredentials = false
+        this.axios.defaults.headers.common = headers
         this.axios.defaults.baseURL = baseURL
         /*
          * Use qs to allow array query params
@@ -44,9 +50,11 @@ export default class RoadizApi {
             if (this.preview) {
                 config.params['_preview'] = this.preview
             }
+
             if (this.debug) {
                 console.log('Axios Request', JSON.stringify(config, null, 2))
             }
+
             return config
         })
     }
