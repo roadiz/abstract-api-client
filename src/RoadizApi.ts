@@ -9,6 +9,7 @@ import {
 } from './types/request'
 import { ArchivesHydraCollection, HydraCollection } from './types/hydra'
 import { RoadizAlternateLink, RoadizNodesSources, RoadizSearchResultItem, RoadizWebResponse } from './types/roadiz'
+import merge from 'deepmerge'
 
 export default class RoadizApi {
     protected axios: AxiosInstance
@@ -45,7 +46,7 @@ export default class RoadizApi {
             },
         }
 
-        const axiosDefaults = defaults ? { ...internalDefaults, ...defaults } : internalDefaults
+        const axiosDefaults = defaults ? merge(internalDefaults, defaults) : internalDefaults
 
         this.axios = axios.create()
         this.axios.defaults = axiosDefaults

@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "axios": "^0.21.1",
+        "deepmerge": "^4.2.2",
         "qs": "^6.10.1"
     },
     "devDependencies": {
