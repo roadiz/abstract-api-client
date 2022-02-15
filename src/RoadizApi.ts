@@ -65,9 +65,13 @@ export default class RoadizApi {
         })
     }
 
-    public getWebResponseByPath(params: RoadizRequestWebResponseParams): Promise<AxiosResponse<RoadizWebResponse>> {
+    public getWebResponseByPath(
+        params: RoadizRequestWebResponseParams | string
+    ): Promise<AxiosResponse<RoadizWebResponse>> {
+        const requestParams: RoadizRequestWebResponseParams = typeof params === 'string' ? { path: params } : params
+
         return this.get<RoadizWebResponse, RoadizRequestWebResponseParams>(`/web_response_by_path`, {
-            params,
+            params: requestParams,
         })
     }
 
@@ -86,7 +90,7 @@ export default class RoadizApi {
         type: string,
         params: RoadizRequestNSParams
     ): Promise<AxiosResponse<ArchivesHydraCollection>> {
-        return this.axios.get<ArchivesHydraCollection>(`/${type}/archives`, {
+        return this.get<ArchivesHydraCollection, RoadizRequestNSParams>(`/${type}/archives`, {
             params,
         })
     }
