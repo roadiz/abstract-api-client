@@ -69,7 +69,7 @@ API `getAlternateLinks` method will return a `Array<AlternateLink>` from an `Axi
 ```ts
 const api = new RoadizApi(process.env.API_BASE_URL)
 
-api.getSingleNodesSourcesByPath('/').then((response) => {
+api.getWebResponseByPath('/').then((response) => {
     /*
      * [{
      *     url: '/',
