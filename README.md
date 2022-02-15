@@ -24,9 +24,6 @@ tsconfig.json
 
 - Download latest `d.ts` definition file from Roadiz backoffice
 - Extend `RoadizApi` class
-- Add `get{YourNodeType}` methods for each of your node-types. RoadizApi methods use Typescript generics to easily declare
-your return type inside collections: `this.getNodesSourcesForType<NSPage>('page', params)` 
-- Other methods can be overridden without specifying type
 
 ```ts
 export default class MyAwesomeRoadizApi extends RoadizApi {
