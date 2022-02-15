@@ -44,8 +44,7 @@ export default class RoadizApi {
 
         const axiosDefaults = defaults ? merge(internalDefaults, defaults) : internalDefaults
 
-        this.axios = axios.create()
-        this.axios.defaults = axiosDefaults
+        this.axios = axios.create(axiosDefaults)
 
         this.apiKey = apiKey
         this.preview = preview
