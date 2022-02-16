@@ -68,3 +68,11 @@ test('Configured preview API', () => {
             expect(response.status).toBe(200)
         })
 })
+
+test('Fetch all URLs', () => {
+    const api = new RoadizApi(process.env.API_BASE_URL || '', { apiKey: process.env.API_PREVIEW_API_KEY })
+
+    return api.fetchAllUrlsForLocale().then((response) => {
+        expect(response).toEqual(expect.arrayContaining([expect.any(String)]))
+    })
+})

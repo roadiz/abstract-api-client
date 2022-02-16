@@ -1,6 +1,5 @@
 import RoadizApi from '../src/RoadizApi'
 import { NSPage } from './types/roadiz-app-20210623-220029'
-import { RoadizDocument } from '../src/types/roadiz'
 import { RoadizRequestNSParams } from '../src/types/request'
 import { HydraCollection } from '../dist/types/hydra'
 
@@ -29,9 +28,6 @@ test('Headless API: NSPage', () => {
 
             response.data['hydra:member'].forEach((page: NSPage) => {
                 expect(page.url).toContain('/')
-                page.image?.forEach((document: RoadizDocument) => {
-                    expect(document.url).toContain('/files')
-                })
             })
         })
 })
