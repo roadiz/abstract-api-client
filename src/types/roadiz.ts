@@ -128,7 +128,7 @@ export interface RoadizAlternateLink {
 export interface RoadizWebResponse extends JsonLdObject {
     head: RoadizWebResponseHead
     item: RoadizWebResponseItem
-    block: string
+    blocks: HydraCollection<RoadizWalker> | Array<Exclude<RoadizWalker, JsonLdObject>> // depends on HTTP response format (application/json or application/ld+json)
     breadcrumbs: RoadizBreadcrumbs
 }
 
@@ -156,5 +156,5 @@ export interface RoadizWebResponseItem extends JsonLdObject {
 }
 
 export interface RoadizBreadcrumbs extends JsonLdObject {
-    items: HydraCollection<JsonLdObject>
+    items: HydraCollection<JsonLdObject> | Array<unknown> // depends on HTTP response format (application/json or application/ld+json)
 }
