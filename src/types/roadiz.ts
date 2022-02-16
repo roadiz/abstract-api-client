@@ -31,9 +31,7 @@ export interface RoadizNodesSources extends JsonLdObject {
     title: string
     publishedAt: string // ISO publication DateTime
     url?: string // Reachable nodes-sources URL
-    refererUrl?: string // Non-reachable nodes-sources parent URL
     metaTitle?: string
-    metaKeywords?: string
     metaDescription?: string
     urlAliases?: Array<RoadizUrlAlias>
 }
@@ -134,7 +132,7 @@ export interface RoadizWebResponse extends JsonLdObject {
     breadcrumbs: RoadizBreadcrumbs
 }
 
-export interface RoadizWebResponseHead {
+export interface RoadizWebResponseHead extends JsonLdObject {
     facebookUrl?: string
     twitterUrl?: string
     linkedinUrl?: string
@@ -149,6 +147,8 @@ export interface RoadizWebResponseHead {
     siteName?: string
     mainColor?: string
     homePageUrl?: string
+    metaTitle?: string
+    metaDescription?: string
 }
 
 export interface RoadizWebResponseItem extends JsonLdObject {
