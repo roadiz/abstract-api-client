@@ -68,6 +68,7 @@ export interface RoadizTag extends JsonLdObject {
     tagName?: string
     visible?: boolean
     documents: Array<RoadizDocument>
+    parent?: RoadizTag
 }
 
 export interface RoadizAttributeValue {
