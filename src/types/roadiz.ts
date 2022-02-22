@@ -65,7 +65,7 @@ export interface RoadizUrlAlias {
 export interface RoadizTag extends JsonLdObject {
     name?: string
     color?: string
-    tagName?: string
+    slug?: string
     visible?: boolean
     documents: Array<RoadizDocument>
     parent?: RoadizTag
