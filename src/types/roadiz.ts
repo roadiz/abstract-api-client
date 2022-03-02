@@ -115,6 +115,11 @@ export interface RoadizDocument extends JsonLdObject {
     externalUrl?: string
 }
 
+export interface RoadizAlternateLink {
+    url: string
+    locale: string
+}
+
 export interface RoadizWebResponse extends JsonLdObject {
     head: RoadizWebResponseHead
     item: RoadizWebResponseItem
