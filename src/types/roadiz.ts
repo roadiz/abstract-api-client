@@ -104,26 +104,15 @@ export interface RoadizDocument extends JsonLdObject {
     embedId?: string // Only for external documents (Youtube, Vimeo, …)
     embedPlatform?: string // Only for external documents (Youtube, Vimeo, …)
     mimeType?: string
+    type?: string // mimeType short version
     imageWidth?: string // Only for processable documents, i.e. images
     imageHeight?: string // Only for processable documents, i.e. images
     imageAverageColor?: string // Only for processable documents, i.e. images
     filename?: string
     filesize?: string
     thumbnail?: RoadizDocument // Only for none displayable documents, i.e. PDFs
-    documentTranslations?: Array<RoadizDocumentTranslation>
-    url?: string
-}
-
-export interface RoadizDocumentTranslation extends JsonLdObject {
-    name?: string
-    description?: string
     copyright?: string
-    translation?: RoadizTranslation
-}
-
-export interface RoadizAlternateLink {
-    url: string
-    locale: string
+    externalUrl?: string
 }
 
 export interface RoadizWebResponse extends JsonLdObject {
