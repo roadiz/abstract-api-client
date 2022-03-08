@@ -113,6 +113,9 @@ export interface RoadizDocument extends JsonLdObject {
     thumbnail?: RoadizDocument // Only for none displayable documents, i.e. PDFs
     copyright?: string
     externalUrl?: string
+    name?: string
+    description?: string
+    duration?: number
 }
 
 export interface RoadizAlternateLink {
