@@ -115,7 +115,7 @@ export interface RoadizDocument extends JsonLdObject {
     externalUrl?: string
     name?: string
     description?: string
-    duration?: number
+    mediaDuration?: number
 }
 
 export interface RoadizAlternateLink {
