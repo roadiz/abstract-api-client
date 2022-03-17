@@ -126,9 +126,12 @@ export interface RoadizAlternateLink {
 export interface RoadizWebResponse extends JsonLdObject {
     head: RoadizWebResponseHead
     item: RoadizWebResponseItem
-    blocks: HydraCollection<RoadizWalker> | Array<Exclude<RoadizWalker, JsonLdObject>> // depends on HTTP response format (application/json or application/ld+json)
+    blocks: RoadizWebResponseBlocks
     breadcrumbs: RoadizBreadcrumbs
 }
+
+// depends on HTTP response format (application/json or application/ld+json)
+export type RoadizWebResponseBlocks = HydraCollection<RoadizWalker> | Array<Omit<RoadizWalker, keyof JsonLdObject>>
 
 export interface RoadizWebResponseHead extends JsonLdObject {
     facebookUrl?: string
