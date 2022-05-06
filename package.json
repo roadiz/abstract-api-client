@@ -1,6 +1,6 @@
 {
   "name": "@roadiz/abstract-api-client",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Roadiz abstract API Typescript client interfaces and SDK",
   "repository": {
     "url": "https://github.com/roadiz/abstract-api-client",
