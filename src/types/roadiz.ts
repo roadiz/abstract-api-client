@@ -127,6 +127,7 @@ export interface RoadizFolder extends JsonLdObject {
 
 export interface RoadizAlternateLink {
     url: string
+    title?: string
     locale: string
 }
 
