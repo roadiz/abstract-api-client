@@ -5,6 +5,7 @@
  */
 export interface AlternateLink {
     url: string
+    title?: string
     locale: string
 }
 
