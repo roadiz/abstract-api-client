@@ -166,6 +166,7 @@ export default class RoadizApi {
                 return {
                     url: attributes[0].split('<').join('').split('>').join('').trim(),
                     locale: attributes[2].split('hreflang="').join('').split('"').join('').trim(),
+                    title: attributes[3]?.split('title="').join('').split('"').join('').trim() || undefined,
                 } as RoadizAlternateLink
             })
     }
