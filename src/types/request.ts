@@ -15,6 +15,7 @@ export interface RoadizRequestParams {
     _preview?: boolean
     _locale?: string
     properties?: string[]
+    [key: string]: unknown
 }
 
 export interface RoadizRequestNSParams extends RoadizRequestParams {
