@@ -10,22 +10,32 @@ export interface RoadizNodeType {
     name: string
 }
 
-export interface RoadizNode {
-    nodeName: string
-    home: boolean
+export interface RoadizNode extends JsonLdObject {
+    nodeName?: string
+    home?: boolean
     visible: boolean
     status?: number
+    position?: number
     nodeType?: RoadizNodeType
     tags?: Array<RoadizTag>
-    attributeValues: Array<RoadizAttributeValue>
+    attributeValues?: Array<RoadizAttributeValue>
 }
 
 export interface RoadizTranslation {
     locale: string // ISO 2-letter language code (fr, en, de).
 }
 
+export interface RoadizSecureRealm extends JsonLdObject {
+    type: 'plain_password' | 'bearer_role' | 'bearer_user'
+    behaviour: 'none' | 'deny' | 'hide_blocks'
+    authenticationScheme: string // First urlAlias OR node.nodeName
+    name?: string
+    challenge?: string
+    role?: string
+}
+
 export interface RoadizNodesSources extends JsonLdObject {
-    node: RoadizNode
+    node: Omit<RoadizNode, 'nodeName' | 'home' | 'nodeType'>
     translation?: RoadizTranslation
     slug: string // First urlAlias OR node.nodeName
     title: string
@@ -136,6 +146,8 @@ export interface RoadizWebResponse extends JsonLdObject {
     item: RoadizWebResponseItem
     blocks: RoadizWebResponseBlocks
     breadcrumbs: RoadizBreadcrumbs
+    realms?: Array<RoadizSecureRealm>
+    hidingBlocks?: boolean
 }
 
 // depends on HTTP response format (application/json or application/ld+json)
