@@ -30,8 +30,6 @@ export interface RoadizSecureRealm extends JsonLdObject {
     behaviour: 'none' | 'deny' | 'hide_blocks'
     authenticationScheme: string // First urlAlias OR node.nodeName
     name?: string
-    challenge?: string
-    role?: string
 }
 
 export interface RoadizNodesSources extends JsonLdObject {
@@ -178,4 +176,70 @@ export interface RoadizWebResponseItem extends JsonLdObject {
 
 export interface RoadizBreadcrumbs extends JsonLdObject {
     items: HydraCollection<JsonLdObject> | Array<unknown> // depends on HTTP response format (application/json or application/ld+json)
+}
+
+/*
+ * User DTOs exposed by roadiz/user-bundle.
+ * Extend this interface in your project when additional data is exposed.
+ */
+
+/*
+ * Public user information to complete JWT with up-to-date data.
+ * ALWAYS take authorization decisions based on RoadizUserOutput instead of
+ * JWT scopes.
+ */
+export interface RoadizUserOutput extends JsonLdObject {
+    identifier: string // email or username: identifier used for login
+    roles?: string[]
+    firstName?: string | null
+    lastName?: string | null
+    phone?: string | null
+    company?: string | null
+    job?: string | null
+    birthday?: string | null
+    emailValidated?: boolean
+}
+
+/*
+ * Public user creation workflow:
+ * - Create a user with email and plainPassword
+ * This operation MUST be secured with HTTPS as payload holds a
+ * plain password.
+ */
+export interface RoadizUserInput {
+    email: string
+    plainPassword: string
+    firstName?: string | null
+    lastName?: string | null
+    phone?: string | null
+    company?: string | null
+    job?: string | null
+    birthday?: string | null
+}
+
+/*
+ * User password recovery workflow:
+ * - user password request
+ * - Email sent with temporary token (if account exists)
+ * - user reset its password with token
+ */
+export interface RoadizUserPasswordRequest {
+    identifier: string
+}
+export interface RoadizUserPasswordReset {
+    token: string
+    plainPassword: string
+}
+
+/*
+ * User account validation workflow:
+ * - validation request
+ * - Email sent with temporary token
+ * - account validation with received token
+ */
+export interface RoadizUserValidationRequest {
+    identifier: string
+}
+export interface RoadizUserValidation {
+    token: string
 }
