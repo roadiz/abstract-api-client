@@ -8,8 +8,24 @@ import {
     RoadizRequestWebResponseParams,
 } from './types/request'
 import { ArchivesHydraCollection, HydraCollection } from './types/hydra'
-import { RoadizAlternateLink, RoadizNodesSources, RoadizSearchResultItem, RoadizWebResponse } from './types/roadiz'
+import {
+    RoadizAlternateLink,
+    RoadizNodesSources,
+    RoadizSearchResultItem,
+    RoadizUserInput,
+    RoadizUserOutput,
+    RoadizUserPasswordRequest,
+    RoadizUserPasswordReset,
+    RoadizUserValidation,
+    RoadizUserValidationRequest,
+    RoadizWebResponse,
+} from './types/roadiz'
 import merge from 'deepmerge'
+
+interface RoadizUserRequestHeaders {
+    authorization?: string
+    'x-g-recaptcha-response'?: string
+}
 
 export default class RoadizApi {
     protected apiKey?: string
@@ -120,6 +136,97 @@ export default class RoadizApi {
      */
     public get<T, R = RoadizRequestParams>(url: string, config?: RoadizRequestConfig<R>): Promise<AxiosResponse<T>> {
         return this.axios.get<T>(url, config)
+    }
+
+    /**
+     * UserBundle: Fetch current logged-in user information.
+     * @param {string} jwtToken
+     */
+    public getUserInformation(jwtToken: string): Promise<AxiosResponse<RoadizUserOutput>> {
+        const headers = {
+            authorization: `Bearer ${jwtToken}`,
+        } as RoadizUserRequestHeaders
+        return this.get<RoadizUserOutput>('/users/me', {
+            headers,
+            params: {},
+        })
+    }
+
+    /**
+     * UserBundle: Create a new public user. Anonymous request protected by Google reCAPTCHA.
+     * Notice that you MUST log in user after success in order to get a JWT.
+     *
+     * @param {RoadizUserInput} data
+     * @param {string | null} googleRecaptchaResponse
+     */
+    public postUser(data: RoadizUserInput, googleRecaptchaResponse: string | null = null): Promise<AxiosResponse> {
+        const headers = {} as RoadizUserRequestHeaders
+        if (null !== googleRecaptchaResponse) {
+            headers['x-g-recaptcha-response'] = googleRecaptchaResponse
+        }
+        return this.axios.post('/users/signup', data, {
+            headers,
+            params: {},
+        })
+    }
+
+    /**
+     * UserBundle: Ask for a password reset request. Anonymous request protected by Google reCAPTCHA.
+     * @param {RoadizUserPasswordRequest} data
+     * @param {string | null} googleRecaptchaResponse
+     */
+    public postUserPasswordRequest(
+        data: RoadizUserPasswordRequest,
+        googleRecaptchaResponse: string | null = null
+    ): Promise<AxiosResponse> {
+        const headers = {} as RoadizUserRequestHeaders
+        if (null !== googleRecaptchaResponse) {
+            headers['x-g-recaptcha-response'] = googleRecaptchaResponse
+        }
+        return this.axios.post('/users/password_request', data, {
+            headers,
+            params: {},
+        })
+    }
+
+    /**
+     * UserBundle: Reset a user password. Anonymous request protected by given token.
+     * @param {RoadizUserPasswordReset} data
+     */
+    public putUserPasswordReset(data: RoadizUserPasswordReset): Promise<AxiosResponse> {
+        return this.axios.put('/users/password_reset', data, {
+            params: {},
+        })
+    }
+
+    /**
+     * UserBundle: Asks for a User validation request. User MUST be logged-in.
+     * @param {RoadizUserValidationRequest} data
+     * @param {string} jwtToken
+     */
+    public postUserValidationRequest(data: RoadizUserValidationRequest, jwtToken: string): Promise<AxiosResponse> {
+        const headers = {
+            authorization: `Bearer ${jwtToken}`,
+        } as RoadizUserRequestHeaders
+        return this.axios.post('/users/validation_request', data, {
+            headers,
+            params: {},
+        })
+    }
+
+    /**
+     * UserBundle: Validate a User with temporary token. User MUST be logged-in at the same time.
+     * @param {RoadizUserValidation} data
+     * @param {string} jwtToken
+     */
+    public putUserValidation(data: RoadizUserValidation, jwtToken: string): Promise<AxiosResponse> {
+        const headers = {
+            authorization: `Bearer ${jwtToken}`,
+        } as RoadizUserRequestHeaders
+        return this.axios.put('/users/validate', data, {
+            headers,
+            params: {},
+        })
     }
 
     public async fetchAllUrlsForLocale(_locale = 'fr'): Promise<Array<string>> {
