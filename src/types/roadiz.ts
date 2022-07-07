@@ -62,10 +62,6 @@ export interface RoadizArchivesYear {
     [key: string]: string
 }
 
-export interface RoadizArchivesList {
-    [key: string]: RoadizArchivesYear
-}
-
 export interface RoadizUrlAlias {
     alias?: string
 }
@@ -176,6 +172,16 @@ export interface RoadizWebResponseItem extends JsonLdObject {
 
 export interface RoadizBreadcrumbs extends JsonLdObject {
     items: HydraCollection<JsonLdObject> | Array<unknown> // depends on HTTP response format (application/json or application/ld+json)
+}
+
+/**
+ * A Roadiz entity archive exposes available months when entities were published at.
+ * I.e /api/blog_posts/archives
+ * @see RoadizApi.getArchivesForType()
+ */
+export interface RoadizEntityArchive extends JsonLdObject {
+    year: number
+    months: Record<string, string>
 }
 
 /*
