@@ -28,7 +28,10 @@ export interface RoadizTranslation {
 export interface RoadizSecureRealm extends JsonLdObject {
     type: 'plain_password' | 'bearer_role' | 'bearer_user'
     behaviour: 'none' | 'deny' | 'hide_blocks'
-    authenticationScheme: string // First urlAlias OR node.nodeName
+    // Defines how frontend should pass credentials to API:
+    // - PasswordQuery: pass `?password=xxxxx` in query-string
+    // - Bearer: use standard `Authentication: Bearer xxxxxx` HTTP header
+    authenticationScheme: 'PasswordQuery' | 'Bearer'
     name?: string
 }
 
