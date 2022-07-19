@@ -224,6 +224,7 @@ export interface RoadizUserInput {
     company?: string | null
     job?: string | null
     birthday?: string | null
+    metadata?: unknown
 }
 
 /*
