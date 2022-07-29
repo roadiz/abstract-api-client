@@ -124,6 +124,7 @@ export interface RoadizDocument extends JsonLdObject {
     description?: string
     mediaDuration?: number
     folders?: Array<RoadizFolder>
+    altSources?: Array<RoadizDocument> // Only for native video and audio documents
 }
 
 export interface RoadizFolder extends JsonLdObject {
