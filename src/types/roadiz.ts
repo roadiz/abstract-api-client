@@ -127,6 +127,7 @@ export interface RoadizDocument extends JsonLdObject {
     description?: string
     mediaDuration?: number
     folders?: Array<RoadizFolder>
+    private?: boolean
 }
 
 export interface RoadizFolder extends JsonLdObject {
