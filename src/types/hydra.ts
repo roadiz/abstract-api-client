@@ -1,4 +1,4 @@
-import { RoadizArchivesList } from './roadiz'
+import { RoadizEntityArchive } from './roadiz'
 import { JsonLdObject } from './jsonld'
 
 /**
@@ -13,7 +13,7 @@ export interface HydraCollection<T> extends JsonLdObject {
     'hydra:view': HydraView
 }
 
-export type ArchivesHydraCollection = HydraCollection<RoadizArchivesList>
+export type ArchivesHydraCollection = HydraCollection<RoadizEntityArchive>
 
 export interface HydraView extends JsonLdObject {
     'hydra:first'?: string

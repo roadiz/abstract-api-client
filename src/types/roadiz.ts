@@ -28,10 +28,11 @@ export interface RoadizTranslation {
 export interface RoadizSecureRealm extends JsonLdObject {
     type: 'plain_password' | 'bearer_role' | 'bearer_user'
     behaviour: 'none' | 'deny' | 'hide_blocks'
-    authenticationScheme: string // First urlAlias OR node.nodeName
+    // Defines how frontend should pass credentials to API:
+    // - PasswordQuery: pass `?password=xxxxx` in query-string
+    // - Bearer: use standard `Authentication: Bearer xxxxxx` HTTP header
+    authenticationScheme: 'PasswordQuery' | 'Bearer'
     name?: string
-    challenge?: string
-    role?: string
 }
 
 export interface RoadizNodesSources extends JsonLdObject {
@@ -62,10 +63,6 @@ export interface RoadizSearchResultItem {
 
 export interface RoadizArchivesYear {
     [key: string]: string
-}
-
-export interface RoadizArchivesList {
-    [key: string]: RoadizArchivesYear
 }
 
 export interface RoadizUrlAlias {
@@ -128,6 +125,7 @@ export interface RoadizDocument extends JsonLdObject {
     mediaDuration?: number
     folders?: Array<RoadizFolder>
     private?: boolean
+    altSources?: Array<RoadizDocument> // Only for native video and audio documents
 }
 
 export interface RoadizFolder extends JsonLdObject {
@@ -179,4 +177,81 @@ export interface RoadizWebResponseItem extends JsonLdObject {
 
 export interface RoadizBreadcrumbs extends JsonLdObject {
     items: HydraCollection<JsonLdObject> | Array<unknown> // depends on HTTP response format (application/json or application/ld+json)
+}
+
+/**
+ * A Roadiz entity archive exposes available months when entities were published at.
+ * I.e /api/blog_posts/archives
+ * @see RoadizApi.getArchivesForType()
+ */
+export interface RoadizEntityArchive extends JsonLdObject {
+    year: number
+    months: Record<string, string>
+}
+
+/*
+ * User DTOs exposed by roadiz/user-bundle.
+ * Extend this interface in your project when additional data is exposed.
+ */
+
+/*
+ * Public user information to complete JWT with up-to-date data.
+ * ALWAYS take authorization decisions based on RoadizUserOutput instead of
+ * JWT scopes.
+ */
+export interface RoadizUserOutput extends JsonLdObject {
+    identifier: string // email or username: identifier used for login
+    roles?: string[]
+    firstName?: string | null
+    lastName?: string | null
+    phone?: string | null
+    company?: string | null
+    job?: string | null
+    birthday?: string | null
+    emailValidated?: boolean
+}
+
+/*
+ * Public user creation workflow:
+ * - Create a user with email and plainPassword
+ * This operation MUST be secured with HTTPS as payload holds a
+ * plain password.
+ */
+export interface RoadizUserInput {
+    email: string
+    plainPassword: string
+    firstName?: string | null
+    lastName?: string | null
+    phone?: string | null
+    company?: string | null
+    job?: string | null
+    birthday?: string | null
+    metadata?: unknown
+}
+
+/*
+ * User password recovery workflow:
+ * - user password request
+ * - Email sent with temporary token (if account exists)
+ * - user reset its password with token
+ */
+export interface RoadizUserPasswordRequest {
+    identifier: string
+}
+export interface RoadizUserPasswordReset {
+    token: string
+    plainPassword: string
+}
+
+/*
+ * User account validation workflow:
+ * - validation request
+ * - Email sent with temporary token
+ * - account validation with received token
+ */
+export interface RoadizUserValidationRequest {
+    identifier: string
+}
+export interface RoadizUserValidation {
+    token: string
 }
