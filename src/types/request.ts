@@ -62,6 +62,10 @@ export interface RoadizRequestTagsParams extends RoadizRequestParams {
     order?: {
         [key: string]: 'ASC' | 'DESC'
     }
+    not?: {
+        'parent.id'?: string
+        'parent.tagName'?: string
+    }
     tagName?: string
     'parent.id'?: string | Array<string>
     'parent.tagName'?: string | Array<string>
