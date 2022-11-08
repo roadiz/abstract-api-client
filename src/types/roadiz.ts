@@ -36,7 +36,7 @@ export interface RoadizSecureRealm extends JsonLdObject {
 }
 
 export interface RoadizNodesSources extends JsonLdObject {
-    node: Omit<RoadizNode, 'nodeName' | 'home' | 'nodeType'>
+    node: Omit<RoadizNode, 'home' | 'nodeType' | 'status'>
     translation?: RoadizTranslation
     slug: string // First urlAlias OR node.nodeName
     title: string
