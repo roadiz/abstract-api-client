@@ -122,6 +122,7 @@ export interface RoadizDocument extends JsonLdObject {
     externalUrl?: string
     name?: string
     description?: string
+    publicUrl?: string // Only for none processable documents, i.e. PDFs, SVG
     mediaDuration?: number
     folders?: Array<RoadizFolder>
     private?: boolean
