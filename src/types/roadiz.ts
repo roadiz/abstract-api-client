@@ -44,6 +44,7 @@ export interface RoadizNodesSources extends JsonLdObject {
     url?: string // Reachable nodes-sources URL
     metaTitle?: string
     metaDescription?: string
+    noIndex?: boolean
     urlAliases?: Array<RoadizUrlAlias>
 }
 

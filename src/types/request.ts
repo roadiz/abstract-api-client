@@ -27,6 +27,7 @@ export interface RoadizRequestNSParams extends RoadizRequestParams {
     path?: string
     id?: number
     title?: string
+    noIndex?: boolean
     publishedAt?: RoadizRequestDateTimeParams
     'node.createdAt'?: RoadizRequestDateTimeParams
     'node.updatedAt'?: RoadizRequestDateTimeParams
