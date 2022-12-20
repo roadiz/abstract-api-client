@@ -5,6 +5,8 @@ Based on *Axios* HTTP client.
 
 ## Usage
 
+Version 3.x should only be used with Roadiz v2.1+, for older versions use version 2.x
+
 ```bash
 yarn add @roadiz/abstract-api-client
 ```
