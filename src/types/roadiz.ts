@@ -171,6 +171,7 @@ export interface RoadizWebResponseHead extends JsonLdObject {
     homePageUrl?: string
     metaTitle?: string
     metaDescription?: string
+    noIndex?: boolean
 }
 
 export interface RoadizWebResponseItem extends JsonLdObject {
