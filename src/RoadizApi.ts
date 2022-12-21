@@ -229,7 +229,7 @@ export default class RoadizApi {
         })
     }
 
-    public async fetchAllUrlsForLocale(_locale = 'fr'): Promise<Array<string>> {
+    public async fetchAllUrlsForLocale(_locale = 'fr', noIndex: boolean | undefined = false): Promise<Array<string>> {
         let page = 1
         let active = true
         const refs = [] as Array<string>
@@ -237,6 +237,7 @@ export default class RoadizApi {
         do {
             await this.getNodesSources({
                 'node.nodeType.reachable': true,
+                noIndex,
                 properties: ['url'],
                 page,
                 _locale,

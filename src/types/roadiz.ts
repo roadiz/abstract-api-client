@@ -36,7 +36,7 @@ export interface RoadizSecureRealm extends JsonLdObject {
 }
 
 export interface RoadizNodesSources extends JsonLdObject {
-    node: Omit<RoadizNode, 'nodeName' | 'home' | 'nodeType'>
+    node: Omit<RoadizNode, 'home' | 'nodeType' | 'status'>
     translation?: RoadizTranslation
     slug: string // First urlAlias OR node.nodeName
     title: string
@@ -44,6 +44,7 @@ export interface RoadizNodesSources extends JsonLdObject {
     url?: string // Reachable nodes-sources URL
     metaTitle?: string
     metaDescription?: string
+    noIndex?: boolean
     urlAliases?: Array<RoadizUrlAlias>
 }
 
@@ -122,6 +123,7 @@ export interface RoadizDocument extends JsonLdObject {
     externalUrl?: string
     name?: string
     description?: string
+    publicUrl?: string // Only for none processable documents, i.e. PDFs, SVG
     mediaDuration?: number
     folders?: Array<RoadizFolder>
     private?: boolean
@@ -169,6 +171,7 @@ export interface RoadizWebResponseHead extends JsonLdObject {
     homePageUrl?: string
     metaTitle?: string
     metaDescription?: string
+    noIndex?: boolean
 }
 
 export interface RoadizWebResponseItem extends JsonLdObject {
