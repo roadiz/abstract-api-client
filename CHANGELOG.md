@@ -1,3 +1,9 @@
+### [3.0.2](https://github.com/roadiz/abstract-api-client/compare/3.0.1...3.0.2) (2023-02-15)
+
+### Bug Fixes
+
+* Added Roadiz API `b64DecodeUnicode` method to convert base64 to UTF-8 ([5721812](https://github.com/roadiz/abstract-api-client/commit/5721812fda1fce77d0a0e49b0fcfd89fb2b6dd92))
+
 ### [3.0.1](https://github.com/roadiz/abstract-api-client/compare/3.0.0...3.0.1) (2023-02-15)
 
 ### Features
