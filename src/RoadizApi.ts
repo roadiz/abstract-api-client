@@ -276,8 +276,18 @@ export default class RoadizApi {
                     url: attributes[0].split('<').join('').split('>').join('').trim(),
                     locale: attributes[2].split('hreflang="').join('').split('"').join('').trim(),
                     // Must decode translation name from base64 because headers are ASCII only
-                    title: title ? atob(title) : undefined,
+                    title: title ? this.b64DecodeUnicode(title) : undefined,
                 } as RoadizAlternateLink
             })
+    }
+
+    b64DecodeUnicode(str: string): string {
+        return decodeURIComponent(
+            Array.prototype.map
+                .call(Buffer.from(str, 'base64').toString('binary'), function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+                })
+                .join('')
+        )
     }
 }
