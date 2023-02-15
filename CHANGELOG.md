@@ -1,3 +1,9 @@
+### [3.0.1](https://github.com/roadiz/abstract-api-client/compare/3.0.0...3.0.1) (2023-02-15)
+
+### Features
+
+* Must decode translation name from base64 because headers are ASCII only ([eafa903](https://github.com/roadiz/abstract-api-client/commit/eafa9031f48c2ccc2320bfae32660de39e6b124d))
+
 ### [3.0.0](https://github.com/roadiz/abstract-api-client/compare/v2.1.4...v3.0.0) (2022-12-21)
 
 ### Features
