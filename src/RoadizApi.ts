@@ -270,11 +270,13 @@ export default class RoadizApi {
             })
             .map((link: string) => {
                 const attributes = link.split(';')
+                const title = attributes[3]?.split('title="').join('').split('"').join('').trim() || undefined
 
                 return {
                     url: attributes[0].split('<').join('').split('>').join('').trim(),
                     locale: attributes[2].split('hreflang="').join('').split('"').join('').trim(),
-                    title: attributes[3]?.split('title="').join('').split('"').join('').trim() || undefined,
+                    // Must decode translation name from base64 because headers are ASCII only
+                    title: title ? atob(title) : undefined,
                 } as RoadizAlternateLink
             })
     }
