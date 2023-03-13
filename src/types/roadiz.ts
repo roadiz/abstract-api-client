@@ -152,24 +152,29 @@ export interface RoadizWebResponse extends JsonLdObject {
 // depends on HTTP response format (application/json or application/ld+json)
 export type RoadizWebResponseBlocks = HydraCollection<RoadizWalker> | Array<Omit<RoadizWalker, keyof JsonLdObject>>
 
-export interface RoadizWebResponseHead extends JsonLdObject {
-    facebookUrl?: string
-    twitterUrl?: string
-    linkedinUrl?: string
-    instagramUrl?: string
-    youtubeUrl?: string
-    shareImage?: RoadizDocument
-    googleAnalytics?: string
-    googleTagManager?: string
-    matomoUrl?: string
-    matomoSiteId?: string
-    policyUrl?: string
-    siteName?: string
-    mainColor?: string
-    homePageUrl?: string
-    metaTitle?: string
-    metaDescription?: string
+export interface RoadizNodesSourcesHead extends JsonLdObject {
+    siteName?: string | null
+    metaTitle?: string | null
+    metaDescription?: string | null
+    policyUrl?: string | null
+    homePageUrl?: string | null
+    shareImage?: RoadizDocument | null
+    facebookUrl?: string | null
+    twitterUrl?: string | null
+    linkedinUrl?: string | null
+    instagramUrl?: string | null
+    youtubeUrl?: string | null
+    noIndex?: boolean
+    googleAnalytics?: string | null
+    googleTagManager?: string | null
+    matomoUrl?: string | null
+    matomoSiteId?: string | null
+    matomoTagManager?: string | null
+    mainColor?: string | null
 }
+
+// TODO: add generic for Events API to augment this interface?
+export type RoadizWebResponseHead = RoadizNodesSourcesHead
 
 export interface RoadizWebResponseItem extends JsonLdObject {
     url: string
