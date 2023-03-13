@@ -1,3 +1,9 @@
+## [3.1.0](https://github.com/roadiz/abstract-api-client/compare/v2.0.8...v3.1.0) (2023-03-13)
+
+### Features
+
+* **types:** add RoadizNodesSourcesHead ([36c90db](https://github.com/roadiz/abstract-api-client/commit/36c90db0dab03b45349885d263f576dabf9d3865))
+
 ### [3.0.2](https://github.com/roadiz/abstract-api-client/compare/3.0.1...3.0.2) (2023-02-15)
 
 ### Bug Fixes
