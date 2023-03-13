@@ -14,7 +14,7 @@ test('Non-configured API is not found', () => {
 })
 
 test('Configured API', () => {
-    const api = new RoadizApi(process.env.API_BASE_URL || '', { apiKey: process.env.API_NON_PREVIEW_API_KEY })
+    const api = new RoadizApi(process.env.API_BASE_URL || '')
 
     return api
         .getNodesSources({
@@ -36,7 +36,7 @@ test('Test NodesSources HydraCollection response', () => {
 })
 
 test('Test CommonContent Response HydraCollection response', () => {
-    const api = new RoadizApi(process.env.API_BASE_URL || '', { apiKey: process.env.API_NON_PREVIEW_API_KEY })
+    const api = new RoadizApi(process.env.API_BASE_URL || '')
 
     return api.getNodesSources({}).then((response) => {
         expect(response.data['hydra:totalItems']).toBeGreaterThan(1)
@@ -46,7 +46,7 @@ test('Test CommonContent Response HydraCollection response', () => {
 })
 
 test('Bad Api key preview API', () => {
-    const api = new RoadizApi(process.env.API_BASE_URL || '', { apiKey: process.env.API_NON_PREVIEW_API_KEY })
+    const api = new RoadizApi(process.env.API_BASE_URL || '')
 
     return api
         .getNodesSources({
@@ -75,4 +75,12 @@ test('Fetch all URLs', () => {
     return api.fetchAllUrlsForLocale().then((response) => {
         expect(response).toEqual(expect.arrayContaining([expect.any(String)]))
     })
+})
+
+test('Decode header link base64', () => {
+    const api = new RoadizApi(process.env.API_BASE_URL || '', { apiKey: process.env.API_PREVIEW_API_KEY })
+
+    expect(api.b64DecodeUnicode('RGVmYXVsdCB0cmFuc2xhdGlvbg==')).toEqual('Default translation')
+    expect(api.b64DecodeUnicode('RnJhbsOnYWlz')).toEqual('Français')
+    expect(api.b64DecodeUnicode('4p2k77iP8J+Riw==')).toEqual('❤️👋')
 })

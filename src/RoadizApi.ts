@@ -229,7 +229,7 @@ export default class RoadizApi {
         })
     }
 
-    public async fetchAllUrlsForLocale(_locale = 'fr'): Promise<Array<string>> {
+    public async fetchAllUrlsForLocale(_locale = 'fr', noIndex: boolean | undefined = false): Promise<Array<string>> {
         let page = 1
         let active = true
         const refs = [] as Array<string>
@@ -237,6 +237,7 @@ export default class RoadizApi {
         do {
             await this.getNodesSources({
                 'node.nodeType.reachable': true,
+                noIndex,
                 properties: ['url'],
                 page,
                 _locale,
@@ -269,12 +270,24 @@ export default class RoadizApi {
             })
             .map((link: string) => {
                 const attributes = link.split(';')
+                const title = attributes[3]?.split('title="').join('').split('"').join('').trim() || undefined
 
                 return {
                     url: attributes[0].split('<').join('').split('>').join('').trim(),
                     locale: attributes[2].split('hreflang="').join('').split('"').join('').trim(),
-                    title: attributes[3]?.split('title="').join('').split('"').join('').trim() || undefined,
+                    // Must decode translation name from base64 because headers are ASCII only
+                    title: title ? this.b64DecodeUnicode(title) : undefined,
                 } as RoadizAlternateLink
             })
+    }
+
+    b64DecodeUnicode(str: string): string {
+        return decodeURIComponent(
+            Array.prototype.map
+                .call(Buffer.from(str, 'base64').toString('binary'), function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+                })
+                .join('')
+        )
     }
 }

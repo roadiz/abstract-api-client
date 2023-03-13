@@ -27,15 +27,31 @@ export interface RoadizRequestNSParams extends RoadizRequestParams {
     path?: string
     id?: number
     title?: string
-    publishedAt?: RoadizRequestPublishedParams
-    tags?: Array<string>
-    tagExclusive?: boolean
-    not?: number | string | Array<number | string>
+    noIndex?: boolean
+    publishedAt?: RoadizRequestDateTimeParams
+    'node.createdAt'?: RoadizRequestDateTimeParams
+    'node.updatedAt'?: RoadizRequestDateTimeParams
+    // Since Roadiz v2.1 node's tags relation is visible
+    'node.nodesTags.tag'?: Array<string> | string
+    'node.nodesTags.tag.tagName'?: Array<string> | string
+    // Discriminate an existing filter with additional filtering value using a new inner join.
+    intersect?: {
+        'node.nodesTags.tag'?: Array<string> | string
+        'node.nodesTags.tag.tagName'?: Array<string> | string
+    }
+    not?: {
+        'node.nodesTags.tag.tagName'?: Array<string> | string
+        'node.nodeType.name'?: Array<string> | string
+        'node.id'?: Array<string> | string
+    }
     'node.parent'?: string | number
     'node.visible'?: boolean
     'node.home'?: boolean
+    'translation.id'?: string | Array<string>
+    'translation.locale'?: string | Array<string>
     'node.nodeType'?: string | Array<string>
     'node.nodeType.reachable'?: boolean
+    'node.nodeType.publishable'?: boolean
     'node.aNodes.nodeA'?: string | number
     'node.bNodes.nodeB'?: string | number
     'node.aNodes.field.name'?: string
@@ -47,14 +63,25 @@ export interface RoadizRequestTagsParams extends RoadizRequestParams {
     order?: {
         [key: string]: 'ASC' | 'DESC'
     }
+    not?: {
+        'parent.id'?: string
+        'parent.tagName'?: string
+    }
     tagName?: string
-    'parent.tagName'?: string
-    'nodes.nodeType.name'?: string
-    'nodes.parent.nodeName'?: string
+    'parent.id'?: string | Array<string>
+    'parent.tagName'?: string | Array<string>
+    'nodesTags.node.visible'?: boolean
+    'nodesTags.node'?: string | Array<string>
+    'nodesTags.node.nodeName'?: string | Array<string>
+    'nodesTags.node.nodeType'?: string | Array<string>
+    'nodesTags.node.nodeType.name'?: string | Array<string>
+    'nodesTags.node.nodeType.reachable'?: boolean
+    'nodesTags.node.parent.nodeName'?: string | Array<string>
     visible?: boolean
+    locked?: boolean
 }
 
-export interface RoadizRequestPublishedParams {
+export interface RoadizRequestDateTimeParams {
     after?: string
     before?: string
     strictly_after?: string
