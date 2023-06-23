@@ -6,7 +6,7 @@
 import { AxiosRequestConfig } from 'axios'
 
 export interface RoadizRequestConfig<P> extends AxiosRequestConfig {
-    params: P
+    params?: P
 }
 
 export interface RoadizRequestParams {
