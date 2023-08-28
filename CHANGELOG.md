@@ -1,3 +1,12 @@
+## [3.1.2](https://github.com/roadiz/abstract-api-client/compare/3.0.2...3.1.2) (2023-08-28)
+
+
+### Features
+
+* Added new node-source listing fields ([f957c99](https://github.com/roadiz/abstract-api-client/commit/f957c999bd2f7c1b41b85bb255e049d7afafb583))
+* **request:** set RoadizRequestConfig params as optional ([a0c54fa](https://github.com/roadiz/abstract-api-client/commit/a0c54fa67ae50e6efed63cc3234ecae074c185d8))
+* **types:** add RoadizNodesSourcesHead ([36c90db](https://github.com/roadiz/abstract-api-client/commit/36c90db0dab03b45349885d263f576dabf9d3865))
+
 ## [3.1.0](https://github.com/roadiz/abstract-api-client/compare/v2.0.8...v3.1.0) (2023-03-13)
 
 ### Features
