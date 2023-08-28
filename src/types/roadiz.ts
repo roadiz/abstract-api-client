@@ -16,6 +16,8 @@ export interface RoadizNode extends JsonLdObject {
     visible: boolean
     status?: number
     position?: number
+    childrenOrder?: 'position' | 'nodeName' | 'createdAt' | 'updatedAt' | 'ns.publishedAt'
+    childrenOrderDirection?: 'ASC' | 'DESC'
     nodeType?: RoadizNodeType
     tags?: Array<RoadizTag>
     attributeValues?: Array<RoadizAttributeValue>
@@ -46,6 +48,9 @@ export interface RoadizNodesSources extends JsonLdObject {
     metaDescription?: string
     noIndex?: boolean
     urlAliases?: Array<RoadizUrlAlias>
+    listingSortOptions?: {
+        [key: string]: 'ASC' | 'DESC'
+    }
 }
 
 export interface RoadizSearchHighlighting {

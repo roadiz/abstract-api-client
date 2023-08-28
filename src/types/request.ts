@@ -29,6 +29,7 @@ export interface RoadizRequestNSParams extends RoadizRequestParams {
     title?: string
     noIndex?: boolean
     publishedAt?: RoadizRequestDateTimeParams
+    'node.position'?: RoadizRequestRangeParams | number | Array<number>
     'node.createdAt'?: RoadizRequestDateTimeParams
     'node.updatedAt'?: RoadizRequestDateTimeParams
     // Since Roadiz v2.1 node's tags relation is visible
@@ -86,6 +87,14 @@ export interface RoadizRequestDateTimeParams {
     before?: string
     strictly_after?: string
     strictly_before?: string
+}
+
+export interface RoadizRequestRangeParams {
+    between?: string
+    gt?: string
+    gte?: string
+    lt?: string
+    lte?: string
 }
 
 export interface RoadizRequestSearchParams extends RoadizRequestParams {
