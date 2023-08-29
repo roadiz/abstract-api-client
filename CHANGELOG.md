@@ -1,3 +1,10 @@
+## [3.1.3](https://github.com/roadiz/abstract-api-client/compare/v3.1.2...v3.1.3) (2023-08-29)
+
+
+### Features
+
+* Added AttributeValues type and request definitions and endpoint GET method ([3db0bd9](https://github.com/roadiz/abstract-api-client/commit/3db0bd98f18398fb21928883c7c35eeeca6615d6))
+
 ## [3.1.2](https://github.com/roadiz/abstract-api-client/compare/3.0.2...3.1.2) (2023-08-28)
 
 
