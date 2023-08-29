@@ -59,6 +59,25 @@ export interface RoadizRequestNSParams extends RoadizRequestParams {
     'node.bNodes.field.name'?: string
 }
 
+export interface RoadizRequestAttributeValuesParams extends RoadizRequestParams {
+    order?: {
+        [key: string]: 'ASC' | 'DESC'
+    }
+    node?: string | Array<string>
+    'node.id'?: number | Array<number>
+    'node.nodeName'?: string | Array<string>
+    'node.nodeType'?: string | Array<string>
+    'node.nodeType.name'?: string | Array<string>
+    'node.visible'?: boolean
+    'attribute.code'?: string | Array<string>
+    'attribute.type'?: number | Array<number>
+    'attribute.group.canonicalName'?: string | Array<string>
+    'attributeValueTranslations.value'?: string | Record<'between' | 'gt' | 'gte' | 'lt' | 'lte', string>
+    exists?: {
+        'attributeValueTranslations.value': boolean | 'true' | 'false' | '0' | '1'
+    }
+}
+
 export interface RoadizRequestTagsParams extends RoadizRequestParams {
     search?: string
     order?: {

@@ -20,7 +20,7 @@ export interface RoadizNode extends JsonLdObject {
     childrenOrderDirection?: 'ASC' | 'DESC'
     nodeType?: RoadizNodeType
     tags?: Array<RoadizTag>
-    attributeValues?: Array<RoadizAttributeValue>
+    attributeValues?: Array<Omit<RoadizAttributeValue, 'node'>>
 }
 
 export interface RoadizTranslation {
@@ -84,14 +84,15 @@ export interface RoadizTag extends JsonLdObject {
     parent?: RoadizTag
 }
 
-export interface RoadizAttributeValue {
-    attribute: RoadizAttribute
-    attributeValueTranslations: Array<RoadizAttributeValueTranslation>
-}
-
-export interface RoadizAttributeValueTranslation {
-    value?: string
-    translation: RoadizTranslation
+export interface RoadizAttributeValue extends JsonLdObject {
+    node?: string
+    position?: number
+    type?: number
+    code?: string
+    color?: string | null
+    label?: string
+    value?: string | number | boolean | null
+    documents?: Array<RoadizDocument>
 }
 
 export interface RoadizAttribute {

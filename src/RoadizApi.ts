@@ -6,10 +6,12 @@ import {
     RoadizRequestParams,
     RoadizRequestSearchParams,
     RoadizRequestWebResponseParams,
+    RoadizRequestAttributeValuesParams,
 } from './types/request'
 import { ArchivesHydraCollection, HydraCollection } from './types/hydra'
 import {
     RoadizAlternateLink,
+    RoadizAttributeValue,
     RoadizNodesSources,
     RoadizSearchResultItem,
     RoadizUserInput,
@@ -97,6 +99,17 @@ export default class RoadizApi {
         return this.get<HydraCollection<RoadizNodesSources>, RoadizRequestNSParams>(`/nodes_sources`, {
             params,
         })
+    }
+
+    public getAttributeValues(
+        params: RoadizRequestAttributeValuesParams
+    ): Promise<AxiosResponse<HydraCollection<RoadizAttributeValue>>> {
+        return this.get<HydraCollection<RoadizAttributeValue>, RoadizRequestAttributeValuesParams>(
+            `/attribute_values`,
+            {
+                params,
+            }
+        )
     }
 
     public getWebResponseByPath(
