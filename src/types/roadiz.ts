@@ -122,6 +122,16 @@ export interface RoadizDocument extends JsonLdObject {
     imageWidth?: string // Only for processable documents, i.e. images
     imageHeight?: string // Only for processable documents, i.e. images
     imageAverageColor?: string // Only for processable documents, i.e. images
+    imageCropAlignment?:
+        | 'top-left'
+        | 'top'
+        | 'top-right'
+        | 'left'
+        | 'center'
+        | 'right'
+        | 'bottom-left'
+        | 'bottom'
+        | 'bottom-right' // Only for processable documents, i.e. images
     filename?: string
     filesize?: string
     thumbnail?: RoadizDocument // Only for none displayable documents, i.e. PDFs
